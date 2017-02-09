@@ -14,10 +14,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import play.db.jpa.Model;
+
 @Entity
 @Table(name = "db_onibus", schema = "public")
 @SequenceGenerator(name = "db_onibus_id_onibus_seq", sequenceName = "public.db_onibus_id_onibus_seq")
-public class Onibus {
+public class Onibus extends Model {
 
 	@Id
 	@GeneratedValue

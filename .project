@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Satup</name>
+	<name>SatupPlay</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -15,7 +15,10 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	<linkedResources><link><name>docviewer</name><type>2</type><location>C:/Users/home/Desktop/play-1.4.2/modules/docviewer/app</location></link>
+	<linkedResources><link><name>crud</name><type>2</type><location>C:/Users/home/Desktop/play-1.4.2/modules/crud/app</location></link>
+<link><name>conf/crud</name><type>2</type><location>C:/Users/home/Desktop/play-1.4.2/modules/crud/conf</location></link>
+<link><name>public/crud</name><type>2</type><location>C:/Users/home/Desktop/play-1.4.2/modules/crud/public</location></link>
+<link><name>docviewer</name><type>2</type><location>C:/Users/home/Desktop/play-1.4.2/modules/docviewer/app</location></link>
 <link><name>public/docviewer</name><type>2</type><location>C:/Users/home/Desktop/play-1.4.2/modules/docviewer/public</location></link>
 </linkedResources>
 </projectDescription>

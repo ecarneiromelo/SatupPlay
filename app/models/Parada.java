@@ -13,10 +13,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import play.db.jpa.Model;
+
 @Entity
 @Table(name = "db_parada" , schema = "public")
 @SequenceGenerator( name = "db_parada_id_parada_seq", sequenceName = "public.db_parada_id_parada_seq")
-public class Parada {
+public class Parada extends Model {
 
 	@Id
 	@Column(name = "id_parada", unique = true, nullable = false)	

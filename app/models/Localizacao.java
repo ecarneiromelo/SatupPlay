@@ -13,10 +13,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import play.db.jpa.Model;
+
 @Entity
 @Table(name = "db_localizacao")
 @SequenceGenerator(name = "db_localizacao_id_localizacao_seq", sequenceName = "public.db_localizacao_id_localizacao_seq")
-public class Localizacao {
+public class Localizacao extends Model{
 
 	@Id
 	@GeneratedValue
