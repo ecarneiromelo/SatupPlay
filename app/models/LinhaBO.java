@@ -16,13 +16,12 @@ import javax.persistence.Table;
 import play.db.jpa.Model;
 
 @Entity
-@Table(name = "db_linha", schema = "public")
-@SequenceGenerator(name = "db_linha_id_linha_seq", sequenceName = "public.db_linha_id_linha_seq")
-public class Linha extends Model {
+@Table(name = "tb_linha", schema = "public")
+public class LinhaBO extends Model {
 	@Id
 	@GeneratedValue
-	@Column(name = "id_linha", nullable = false, unique = true, length = 200)
-	private Integer id_linha;
+	@Column( nullable = false, unique = true)
+	private Long id;
 
 	@Column(name = "ds_nome", nullable = false, unique = true, length = 10)
 	private String ds_nome;
@@ -36,12 +35,12 @@ public class Linha extends Model {
 	@Column(name = "ds_valor", nullable = false)
 	private BigDecimal ds_valor;
 
-	public Integer getId_linha() {
-		return id_linha;
+	public Long getId() {
+		return id;
 	}
 
-	public void setId_linha(Integer id_linha) {
-		this.id_linha = id_linha;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getDs_nome() {
@@ -68,12 +67,5 @@ public class Linha extends Model {
 		this.ds_sentido = ds_sentido;
 	}
 
-	public BigDecimal getDs_valor() {
-		return ds_valor;
-	}
-
-	public void setDs_valor(BigDecimal ds_valor) {
-		this.ds_valor = ds_valor;
-	}
-
 }
+	

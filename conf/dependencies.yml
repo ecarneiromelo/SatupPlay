@@ -1,4 +1,10 @@
 # Application dependencies
+transitiveDependencies: false
 
 require:
+    - play 1.4.2
     - play -> crud
+    - play -> secure
+    - org.postgresql -> postgresql 9.4-1205-jdbc41:
+        transitive: false
+        force: true

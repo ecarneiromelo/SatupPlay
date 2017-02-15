@@ -17,12 +17,11 @@ import play.db.jpa.Model;
 
 @Entity
 @Table(name = "db_parada" , schema = "public")
-@SequenceGenerator( name = "db_parada_id_parada_seq", sequenceName = "public.db_parada_id_parada_seq")
-public class Parada extends Model {
+public class ParadaBO extends Model {
 
 	@Id
-	@Column(name = "id_parada", unique = true, nullable = false)	
-	private Integer id_parada ;
+	@Column(unique = true, nullable = false)	
+	private Long id ;
 	
 	@Column(name = "ds_numero", unique = true, nullable = false, length = 20)
 	private String ds_numero;
@@ -33,16 +32,15 @@ public class Parada extends Model {
 	@Column(name = "ds_posicao" , unique = true, nullable = false, length = 23)
 	private String ds_posicao;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	@JoinTable(name = "tb_linha", schema = "public", joinColumns = { @JoinColumn(name = "id_linha", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_parada", nullable = false, updatable = false) })
-	private List <Linha> linhas ;
+	@ManyToMany
+	private List <LinhaBO> linhas ;
 
-	public Integer getId_parada() {
-		return id_parada;
+	public Long getId() {
+		return id;
 	}
 
-	public void setId_parada(Integer id_parada) {
-		this.id_parada = id_parada;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getDs_numero() {
@@ -69,11 +67,11 @@ public class Parada extends Model {
 		this.ds_posicao = ds_posicao;
 	}
 
-	public List<Linha> getLinhas() {
+	public List<LinhaBO> getLinhas() {
 		return linhas;
 	}
 
-	public void setLinhas(List<Linha> linhas) {
+	public void setLinhas(List<LinhaBO> linhas) {
 		this.linhas = linhas;
 	}
 	

@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,13 +18,11 @@ import play.db.jpa.Model;
 
 @Entity
 @Table(name = "db_localizacao")
-@SequenceGenerator(name = "db_localizacao_id_localizacao_seq", sequenceName = "public.db_localizacao_id_localizacao_seq")
-public class Localizacao extends Model{
+public class LocalizacaoBO extends Model{
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id_localizacao", unique = true, nullable = false)
-	private Integer id_localizacao;
+	private Long id;
 
 	@Column(name = "ds_localizacao", nullable = false)
 	private String ds_localizacao;
@@ -31,16 +30,27 @@ public class Localizacao extends Model{
 	@Column(name = "ds_datahora")
 	private Timestamp ds_dataHora;
 	
-	@OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name="id_onibus", nullable = false)
-    private Onibus onibus;
+	@OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
+	@JoinColumns({
+	@JoinColumn(name = "id_localizacao", referencedColumnName= "id_localizacao", nullable = false),
+	@JoinColumn(name="id_onibus", referencedColumnName="id_onibus", nullable = false)})
+    private OnibusBO onibus;
 
-	public Integer getId_localizacao() {
-		return id_localizacao;
+	
+	public Long getId() {
+		return id;
 	}
 
-	public void setId_localizacao(Integer id_localizacao) {
-		this.id_localizacao = id_localizacao;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public OnibusBO getOnibus() {
+		return onibus;
+	}
+
+	public void setOnibus(OnibusBO onibus) {
+		this.onibus = onibus;
 	}
 
 	public String getDs_localizacao() {
