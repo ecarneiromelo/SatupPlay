@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -30,10 +32,7 @@ public class LocalizacaoBO extends Model{
 	@Column(name = "ds_datahora")
 	private Timestamp ds_dataHora;
 	
-	@OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
-	@JoinColumns({
-	@JoinColumn(name = "id_localizacao", referencedColumnName= "id_localizacao", nullable = false),
-	@JoinColumn(name="id_onibus", referencedColumnName="id_onibus", nullable = false)})
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private OnibusBO onibus;
 
 	

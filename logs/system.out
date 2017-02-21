@@ -1,0 +1,8 @@
+Listening for transport dt_socket at address: 8000
+12:53:30,175 INFO  ~ Starting C:\Users\Edi\git\SatupPlay
+:: loading settings :: url = jar:file:/C:/play-1.4.2/framework/lib/ivy-2.4.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
+12:53:30,386 INFO  ~ Module crud is available (C:\play-1.4.2\modules\crud)
+12:53:30,387 INFO  ~ Module secure is available (C:\play-1.4.2\modules\secure)
+12:53:30,942 WARN  ~ You're running Play! in DEV mode
+12:53:31,165 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+~ Server is up and running
