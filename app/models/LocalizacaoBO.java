@@ -1,71 +1,69 @@
 package models;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
+import controllers.CRUD;
+
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
-import play.db.jpa.Model;
-
+/**
+ * The persistent class for the tb_localizacao database table.
+ * 
+ */
 @Entity
-@Table(name = "db_localizacao")
-public class LocalizacaoBO extends Model{
+@Table(name="tb_localizacao")
+public class LocalizacaoBO extends CRUD implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
 	private Long id;
 
-	@Column(name = "ds_localizacao", nullable = false)
-	private String ds_localizacao;
+	@Column(name="ds_datehora")
+	private Timestamp dsDatehora;
 
-	@Column(name = "ds_datahora")
-	private Timestamp ds_dataHora;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private OnibusBO onibus;
+	@Column(name="ds_localizazao")
+	private String dsLocalizazao;
 
-	
+	//bi-directional many-to-one association to TbOnibus
+	@ManyToOne
+	@JoinColumn(name="id_onibus")
+	private OnibusBO tbOnibus;
+
+	public LocalizacaoBO() {
+	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public OnibusBO getOnibus() {
-		return onibus;
+	public Timestamp getDsDatehora() {
+		return this.dsDatehora;
 	}
 
-	public void setOnibus(OnibusBO onibus) {
-		this.onibus = onibus;
+	public void setDsDatehora(Timestamp dsDatehora) {
+		this.dsDatehora = dsDatehora;
 	}
 
-	public String getDs_localizacao() {
-		return ds_localizacao;
+	public String getDsLocalizazao() {
+		return this.dsLocalizazao;
 	}
 
-	public void setDs_localizacao(String ds_localizacao) {
-		this.ds_localizacao = ds_localizacao;
+	public void setDsLocalizazao(String dsLocalizazao) {
+		this.dsLocalizazao = dsLocalizazao;
 	}
 
-	public Timestamp getDs_dataHora() {
-		return ds_dataHora;
+	public OnibusBO getTbOnibus() {
+		return this.tbOnibus;
 	}
 
-	public void setDs_dataHora(Timestamp ds_dataHora) {
-		this.ds_dataHora = ds_dataHora;
+	public void setTbOnibus(OnibusBO tbOnibus) {
+		this.tbOnibus = tbOnibus;
 	}
+
 }
-

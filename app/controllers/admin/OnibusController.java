@@ -1,3 +1,6 @@
 package controllers.admin;
-public class OnibusController{
+
+import play.mvc.Controller;
+
+public class OnibusController extends Controller {
 }

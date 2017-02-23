@@ -1,68 +1,82 @@
 package models;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
+import controllers.CRUD;
+
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
-import play.db.jpa.Model;
-
+/**
+ * The persistent class for the tb_onibus database table.
+ * 
+ */
 @Entity
-@Table(name = "db_onibus", schema = "public")
-public class OnibusBO extends Model {
-	
+@Table(name="tb_onibus")
+public class OnibusBO extends CRUD implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue
 	private Long id;
 
-	@Column(name = "ds_numero", nullable = false, length = 16)
-	private String numero;
+	@Column(name="ds_numero")
+	private String dsNumero;
 
-	@Column(name = "ds_placa", nullable = false, unique = true, length = 8)
-	private String placa;
+	@Column(name="ds_placa")
+	private String dsPlaca;
 
-	@OneToMany(mappedBy ="onibus" ,cascade=CascadeType.ALL, fetch=FetchType.EAGER )
-	private List<LocalizacaoBO> listLocalizacao;
+	//bi-directional many-to-one association to TbLocalizacao
+	@OneToMany(mappedBy="tbOnibus")
+	private List<LocalizacaoBO> tbLocalizacaos;
+
+	public OnibusBO() {
+	}
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getDsNumero() {
+		return this.dsNumero;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setDsNumero(String dsNumero) {
+		this.dsNumero = dsNumero;
 	}
 
-	public String getPlaca() {
-		return placa;
+	public String getDsPlaca() {
+		return this.dsPlaca;
 	}
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
+	public void setDsPlaca(String dsPlaca) {
+		this.dsPlaca = dsPlaca;
 	}
 
-	public List<LocalizacaoBO> getListLocalizacao() {
-		return listLocalizacao;
+	public List<LocalizacaoBO> getTbLocalizacaos() {
+		return this.tbLocalizacaos;
 	}
 
-	public void setListLocalizacao(List<LocalizacaoBO> listLocalizacao) {
-		this.listLocalizacao = listLocalizacao;
+	public void setTbLocalizacaos(List<LocalizacaoBO> tbLocalizacaos) {
+		this.tbLocalizacaos = tbLocalizacaos;
 	}
+
+	public LocalizacaoBO addTbLocalizacao(LocalizacaoBO tbLocalizacao) {
+		getTbLocalizacaos().add(tbLocalizacao);
+		tbLocalizacao.setTbOnibus(this);
+
+		return tbLocalizacao;
+	}
+
+	public LocalizacaoBO removeTbLocalizacao(LocalizacaoBO tbLocalizacao) {
+		getTbLocalizacaos().remove(tbLocalizacao);
+		tbLocalizacao.setTbOnibus(null);
+
+		return tbLocalizacao;
+	}
+
 }
