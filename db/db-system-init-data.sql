@@ -71,9 +71,22 @@ CREATE TABLE TB_LOCALIZACAO(
 	DS_DATEHORA TIMESTAMP NOT NULL,
     ID_ONIBUS BIGINT
 );
-/* ---------------------------------------------------------------------- */
-/* Add foreign key constraints                                            */
-/* ---------------------------------------------------------------------- */
-
-ALTER TABLE TB_LOCALIZACAO ADD CONSTRAINT ID_ONIBUS_FK
+--------------------------------------------------------
+--   Add foreign key constraints  
+--------------------------------------------------------
+ALTER TABLE RL_LINHA_PARADA ADD CONSTRAINT TB_LINHA_TB_PARADA_FK
+    FOREIGN KEY (ID_LINHA) REFERENCES TB_LINHA (ID);
+	
+ALTER TABLE RL_LINHA_PARADA ADD CONSTRAINT ID_PARADA_FK
+    FOREIGN KEY (ID_PARADA) REFERENCES TB_PARADA (ID);
+	
+ALTER TABLE RL_ONIBUS_LINHA ADD CONSTRAINT ID_ONIBUS_FK
     FOREIGN KEY (ID_ONIBUS) REFERENCES TB_ONIBUS (ID);
+
+ALTER TABLE RL_ONIBUS_LINHA ADD CONSTRAINT ID_ONIBUS_LINHA_FK
+    FOREIGN KEY (ID_LINHA) REFERENCES TB_LINHA (ID);
+	
+ALTER TABLE TB_LOCALIZACAO ADD CONSTRAINT ID_ONIBUS_LOCALIZACAO_FK
+    FOREIGN KEY (ID_ONIBUS) REFERENCES TB_ONIBUS (ID);
+	
+	
