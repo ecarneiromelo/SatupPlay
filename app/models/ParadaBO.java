@@ -1,9 +1,9 @@
 package models;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import controllers.CRUD;
 import play.db.jpa.Model;
 
 

@@ -2,8 +2,9 @@ package controllers.admin;
 
 import controllers.CRUD.For;
 import controllers.base.BaseCRUDController;
-import models.OnibusBO;
+import models.LinhaBO;
 
-@For(OnibusBO.class)
-public class OnibusController extends BaseCRUDController {
+@For(LinhaBO.class)
+public class LinhaController extends BaseCRUDController {
+
 }
