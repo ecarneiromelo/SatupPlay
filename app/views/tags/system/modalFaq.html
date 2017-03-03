@@ -1,0 +1,54 @@
+
+<p>&{'pages.survey.term.doubts'} <a href="#" data-toggle="modal" data-target="#faqModal">&{'pages.survey.term.click.here'}.</a></p>
+<!-- Modal -->
+<div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">&{'faq.title'}</h4>
+         </div>
+         <div class="modal-body">         
+            <div class="panel-group" id="accordion">          
+                %{ for(i=0;;i++) { }%
+                    #{set titleMessageProperty: (_caller.hasTreatment ? 'faq.question.title' + i : 'faq.question.title' + i + '.notTreatment') /}                
+                    #{if play.i18n.Messages.get(titleMessageProperty).equals(titleMessageProperty)}
+                        %{break;}%
+                    #{/if}
+                    #{set faqQuetion: titleMessageProperty /}
+                    #{set faqAnswer: (_caller.hasTreatment ? 'faq.question.content' + i : 'faq.question.content' + i + '.notTreatment') /}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title">
+                               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse${i}">&{faqQuetion}<i class="indicator icon-plus pull-right"></i></a>
+                           </h4>
+                        </div>
+                        <div id="collapse${i}" class="panel-collapse collapse">
+                           <div class="panel-body">
+                               &{faqAnswer}
+                           </div>
+                        </div>
+                    </div>                
+                %{ } }%    
+            </div>
+            
+            %{
+                emailContact = models.SystemParameterBO.findById(common.constants.SystemConstants.SMTP_SENDER);
+                if(emailContact) {                
+                    emailContact = emailContact.getValue()
+                }              
+            }%
+            
+            #{if emailContact}
+            <p>
+               &{'faq.email.contact', emailContact} 
+            </p>
+            #{/if}
+
+         </div>
+         <div class="modal-footer">
+            <button type="button" class=" button_medium_outline" data-dismiss="modal">&{'crud.close'}</button>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,63 @@
+%{ pName = 'object.' + _name + '.' + play.db.Model.Manager.factoryFor(_field.property.relationType).keyName() }%
+
+#{field 'object.' + _name}
+    <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
+        #{if _field.multiple}
+            <div class="div-label">
+                <label for="${field.id}">
+                    &{field.name}
+                </label>
+            </div>
+            <div class="custom-muilt-check-box text-left">
+                %{ 
+                listAll = params?.getAll(pName.toString());
+                _field.choices.each() { 
+                    selected = false;
+                    if(field.error?.message != 'validation.required') {
+                        if(params[pName]) {
+                            selected = listAll.contains(it._key().toString());
+                        } else {
+                            if (_value != null) {
+                                for (it2 in _value) {
+                                    if(it2._key() == it._key()) {
+                                        selected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }%
+                <div style="padding-top: 5px;padding-bottom: 5px; padding-left: 5px;">
+                    <input type="checkbox" name="${pName}" value="${it._key()}" ${selected ? 'checked'.raw() : ''} class="icheck icheckbox_table_list"/>&nbsp;&{it}<br/>
+                </div>
+                %{ } }%
+            </div>
+            #{ifError field.name}
+                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+            #{/ifError}
+        #{/if}
+        #{else}
+            <div class="styled-select">
+                <select id="${field.id}" name="${pName}" class="form-control fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}">
+                    <option value="">&{field.name}</option>
+                    %{ _field.choices.each() { }%
+                    %{
+                        selected = false
+                        if(field.error?.message != 'validation.required') {
+                            if(params[pName]) {
+                                selected = (it._key().toString() == params[pName])
+                            } else {
+                                selected = it._key() == _value?._key()
+                            }
+                        }
+                    }%
+                    <option value="${it._key()}" ${selected ? 'selected="true"'.raw() : ''}>${it}</option>
+                    %{ } }%
+                </select>
+                #{ifError field.name}
+                    <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                #{/ifError}
+            </div>
+        #{/else}
+    </div>
+#{/field}

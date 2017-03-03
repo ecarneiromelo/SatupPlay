@@ -1,0 +1,261 @@
+#{extends '_layout/body-guest.html' /}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- Headings & Paragraph Copy -->
+        <h2>&{'system.title'}</h2>        
+        
+        #{set 'conjunction'}
+            &{'conjunction.and'}
+        #{/set}
+        
+        #{if burnoutAnswer.scoreAvg > 3.5}
+            &{'pages.diagnosis.burnout.thanks', (gender == 'F' ? 'a' : 'o'), userName, 'pages.diagnosis.burnout.first.case'}
+        #{/if}
+        #{else}
+            &{'pages.diagnosis.burnout.thanks', (gender == 'F' ? 'a' : 'o'), userName, 'pages.diagnosis.burnout.second.case'}
+        #{/else}
+        
+        <p style="text-align: center;">
+            #{if burnoutAnswer.scoreAvg > 3.5}
+                &{play.i18n.Messages.get(burnoutAnswer.scoreClass.description).capFirst()}.
+            #{/if}
+        </p>
+  
+        #{if showConclusionTerm}
+            &{'pages.diagnosis.burnout.problems'}
+            <div class="row">                
+                <div class="col-md-12 ">
+                      #{form action:@finishSurvey(id, linkCode), style:'display: inline;'}                      
+                          <p>
+                              <input style="text-align: left;" type="radio" name="orientationRequested" value="true" checked="checked">
+                              <span lang="pt-br"> </span>&{'pages.diagnosis.burnout.request.orientation'}
+                          </p>                      
+                          <p>
+                              <input type="radio" name="orientationRequested" value="false">
+                              <span lang="pt-br"> </span>&{'pages.diagnosis.burnout.request.no.orientation'}
+                          </p>                             
+                          <p class="add_bottom_30">
+                              <button class="button_outline medium_bold" onclick="javascript: blockForQuestion();">&{'pages.diagnosis.finish'}</button>
+                          </p>                      
+                      #{/form}   
+                      #{form action:@showPreviousQuestion(id, linkCode, -1, -1), style:'display: inline;'}    
+                          <p class="add_bottom_30">
+                              <button class="button_outline medium" onclick="javascript: blockForQuestion();">&{'crud.back'}</button>
+                          </p>     
+                      #{/form}                          
+                </div>
+            </div>
+        #{/if}
+          
+        &{'pages.survey.burnout.term.sincerely'}
+        <div><img alt="" src="@{'/public/matemart/img/assinatura.jpg'}"></div>
+        &{'pages.survey.term.signature'}
+        
+        <br/>
+        <br/>  
+        #{if showReport}
+            <p>
+                &{'pages.survey.burnout.ps'}
+            </p>
+            <div class="row" style="padding: 0px 25px; margin-top: 2em;">
+                <div id="parent_chart_id" class="col-md-12" style="background: #fff; padding: 1em; border-radius: 5px; box-shadow: 5px 5px 10px #888888;">
+                    <div class="col-md-12">
+                        <label>
+                            &{'table'}
+                        </label>
+                    </div>
+                    <div class="table-responsive" style="font-size: 14px;">
+                         <table class="table dataTable">
+                            <thead class="white-space-nowrap">
+                                <tr>
+                                    <th width="70%">&{'phases'}</th>
+                                    <th style="width:10%; text-align: center; padding-right: 8px;">&{'score.abr'}</th>
+                                    <th style="width:10%; text-align: center; padding-right: 8px;">&nbsp;</th>
+                                    <th style="width:10%; text-align: center; padding-right: 8px;">&{'maximum.abr'}</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableScore_tbody" class="white-space-nowrap">
+                                <!-- Table body will come here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div class="col-md-12">
+                        <ul>
+                            &{'pages.survey.burnout.table'}
+                        </ul>
+                        <br/>
+                        <br/>
+                        <label style="float: left; margin: 1em 0em;">
+                            &{'chart'}
+                        </label>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="col-sm-1">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-10">
+                        <canvas id="radarChart" data-type="Radar" width="300" height="300"></canvas>
+                    </div>
+                    <div class="col-sm-1">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-12">
+                        <br/>
+                        <br/>
+                        <ul style="display: inline-block;">
+                            &{'pages.survey.burnout.chart'}
+                        </ul>
+                    </div>
+                    <br/>
+                    <div class="col-md-12">
+                        <label style="float: left; margin: 1em 0em;">
+                            &{'general.evaluation'}
+                        </label>
+                        <p style="display: inline-block;">
+                            &{'pages.survey.burnout.general.evaluation'}                
+                        </p>
+                        <ul>
+                            &{'pages.survey.burnout.all.diagnosis'}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        #{/if}
+        <br/>
+        <br/>
+        <i>&{'pages.diagnosis.confidencial.term'}</i>
+    </div>
+    <!-- End col-md-12-->
+</div>
+<!-- End row-->
+
+#{set 'moreScripts'}
+    <script type="text/javascript" src="@{'/public/assets/chart.js/Chart.min.js'}"></script>
+    <script type="text/javascript">
+    #{if showReport}
+        var scoreAvgArray = [];
+        var scoreMaxArray = [];
+        var meanArray = [];
+        var labelsArray = [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6",
+            "F7",
+            "F8",
+            "F9",
+            "F10",
+            "F11",
+            "F12"
+        ];
+        
+        #{set scoreAvgTotal: 0 /}
+        #{list models.VwCountAnswerScoreGroupBO.findByInvitationIdAndSurveyId(burnoutAnswer.invitation.id, burnoutAnswer.survey.id), as: 'item'}
+            ${scoreAvgTotal += item.scoreAvg}
+            scoreAvgArray[${item_index - 1}] = ${item.scoreAvg};
+            scoreMaxArray[${item_index - 1}] = ${item.maxScore};
+            meanArray[${item_index - 1}] = 3.5;
+            $("#tableScore_tbody").append(
+                '<tr>'
+                    + '<td>&{"survey.burnout.table.group" + item_index}</td>'
+                    + '<td style="width:10%; text-align: center;">${item.scoreAvg}</td>'
+                    + '<td style="width:10%; text-align: center;">' + '${item.scoreAvg > 3.5 ? '<div class="ion-checkmark-round"></div>'.raw() : ''}' + '</td>'
+                    + '<td style="width:10%; text-align: center;">${item.maxScore}</td>'
+              + '</tr>'
+            );
+        #{/list}
+        $("#tableScore_tbody").append(
+            '<tr>'
+                + '<td style="font-weight: bold;">&{"total.value"}</td>'
+                + '<td style="width:10%; text-align: center;">${scoreAvgTotal}</td>'
+                + '<td style="width:10%; text-align: center;">&nbsp;</td>'
+                + '<td style="width:10%; text-align: center;">&nbsp;</td>'
+          + '</tr>'
+        );
+            
+        var data = {
+            labels: labelsArray,
+            datasets: [{
+                    label: "&{'score'}",
+                    fill: true,
+                    tension: 0.0,
+                    borderWidth: 3,
+                    borderColor: "rgba(102, 160, 204, 1)",
+                    backgroundColor: "rgba(102, 160, 204, 0.2)",
+                    pointBackgroundColor: "rgba(102, 160, 204, 1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(102, 160, 204, 1)",
+                    data: scoreAvgArray
+                }, {
+                    label: "&{'maximum'}",
+                    fill: false,
+                    tension: 0.0,
+                    borderColor: "rgba(232, 39, 39, 0)",
+                    backgroundColor: "rgba(232, 39, 39, 0.7)",                       
+                    pointBorderWidth: 5,
+                    pointBackgroundColor: "rgba(232, 39, 39, 0.7)",
+                    pointBorderColor: "rgba(232, 39, 39, 0.7)",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(232, 39, 39, 1)",
+                    pointHoverBorderWidth: 7,
+                    pointStyle: "triangle", // 'circle', 'triangle', 'rect', 'rectRot', 'cross', 'crossRot', 'star', 'line', 'dash'
+                    data: scoreMaxArray
+                }, {
+                    label: "&{'average'}",
+                    fill: false,
+                    borderWidth: 2,
+                    backgroundColor: "#fff",
+                    borderColor: "#000",
+                    pointBackgroundColor: "#000",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "#000",
+                    pointStyle: "line", // 'circle', 'triangle', 'rect', 'rectRot', 'cross', 'crossRot', 'star', 'line', 'dash',
+                    borderDash: [8, 8],
+                    data: meanArray
+                }
+        ]};
+            
+        $(function() {
+            // Global chart configs
+            Chart.defaults.global.defaultFontFamily = '"Open Sans", Arial, sans-serif !important';
+            Chart.defaults.global.defaultFontSize = 12;
+            Chart.scaleService.updateScaleDefaults('radialLinear', {
+                ticks: {
+                    min: 1,
+                    max: 6,
+                    stepSize: 1,
+                    fontSize: 12
+                }
+            });
+            
+            var radarOptions = {
+                responsive: true,
+                lineArc: false,
+                legend: {
+                    position: 'top',
+                    display: true,
+                    labels: {
+                        fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        padding: 10,
+                        fontColor: '#2d4050'
+                    }
+                }
+            }
+            var ctx = $("#radarChart");
+            new Chart(ctx, {
+                type: 'radar',
+                data: data,
+                options: radarOptions
+            });
+        });
+    #{/if}
+    </script>
+#{/set}

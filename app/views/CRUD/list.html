@@ -1,0 +1,13 @@
+#{extends 'CRUD/layout.html' /}
+#{set allowInsert:"${!blockInsert}" /}
+#{set allowUpdate:"${!blockUpdate}" /}
+#{set allowDelete:"${!blockDelete}" /}
+
+<h2>&{'crud.list.title', type.name}</h2>
+<div class="step">
+    <div id="middle-wizard">
+        #{crud.search /}
+        #{crud.table /}
+        #{crud.pagination /}
+    </div>
+</div>

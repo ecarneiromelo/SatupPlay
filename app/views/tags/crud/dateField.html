@@ -1,0 +1,36 @@
+#{field 'object.' + _name}  
+    <div class="form-group row ${field.errorClass ? 'has-error' : ''}">
+        <div class="col-xs-12 col-md-6">
+            <div class="datetimepicker-date input-group date ">
+                <input type="text" id="${field.id}" name="${field.name}" class="form-control no-right-border fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="${_value?.format()}">
+                <span id="${field.id}_icon" class="input-icon"></span>
+                <span id="${field.id}_icon_date" class="input-group-addon add-on">
+                    <b class="entypo-calendar"></b>
+                </span>
+            </div>
+            #{ifError field.name}
+                <span class="help-block col-xs-12 help-blockDate">${field.error.raw()}</span>
+            #{/ifError}
+        </div>
+    </div>
+#{/field}
+
+
+
+*{
+<!-- 
+#{field 'object.' + _name}  
+    <div class="form-group ${field.errorClass ? 'has-error' : ''}">
+        <div class="datetimepicker-date">
+            <input id="${field.id}" type="text" class="form-control" name="${field.name}" value="${_value?.format()}" placeholder="&{field.name}">
+            <span class="input-icon">
+                <i class="${_icon ?: 'icon-calendar'}"></i>
+            </span>
+        </div>
+        #{ifError field.name}
+            <span class="help-block col-xs-12 help-blockDate">${field.error.raw()}</span>
+        #{/ifError}
+    </div>
+#{/field}
+ -->
+}*

@@ -1,0 +1,11 @@
+#{field 'object.' + _name}
+    <div class="form-group ${field.errorClass ? 'has-error' : ''}">
+        <input type="text" id="${field.id}" name="${field.name}" class="form-control fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="${params[field.name]?.escape()?.raw() ?: field.error?.message == 'validation.required' ? '' : _value?.escape()?.raw()}" />
+        <span class="input-icon">
+            <i class="${_icon ?: 'icon-keyboard'}"></i>
+        </span>
+        #{ifError field.name}
+            <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+        #{/ifError} 
+    </div>
+#{/field}

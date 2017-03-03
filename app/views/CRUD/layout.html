@@ -1,0 +1,42 @@
+#{extends '_layout/body.html' /}
+
+<div class="row">
+    <div class="col-md-12">
+        #{doLayout /}
+    </div>
+</div>
+
+#{set 'moreScripts_layout'}
+    <script type="text/javascript">
+        // CRUD layout
+        $(function() {
+        	#{if flash.success || success}
+            	$.Notification.autoHideNotify(
+            			'#middle-wizard'
+            			, 'success'
+            		    , 'top center'
+            		    , '&{"title.success"}'
+            		    , '${success ?: flash.success}'
+            	);
+        	#{/if} 
+    		#{if flash.error || error}
+                $.Notification.autoHideNotify(
+                		'#middle-wizard'
+                        ,'error'
+                        , 'top center'
+                        , '&{"title.error"}'
+                        , '${error ?: flash.error}'
+                );
+            #{/if}
+        	#{if flash.warning}
+                $.Notification.autoHideNotify(
+                		'#middle-wizard'
+                        ,'warning'
+                        , 'top center'
+                        , '&{"title.warning"}'
+                        , '${flash.warning}'
+                );
+            #{/if}
+        });
+    </script>
+#{/set}

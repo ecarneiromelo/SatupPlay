@@ -1,0 +1,61 @@
+#{extends 'CRUD/layout.html' /}
+#{set allowInsert:"${!blockUpdate}" /}
+#{set allowUpdate:"${!blockUpdate}" /}
+#{set allowDelete:"${!blockDelete}" /}
+
+<h2>&{'crud.list.title', type.name}</h2>
+<div class="step">
+    <div id="middle-wizard" style="font-size: 14px;">
+        #{form action:@list().remove('page'), method:'GET', id:'searchForm'}
+            #{set fields:['title', 'userGroup.name']/}
+            #{if fields}
+                <input type="hidden" name="searchFields" value="${fields.toString().substring(1, fields.toString().length()-1).replace(',', '')}" />
+            #{/if}
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="data-list">
+                        <li>
+                            <div class="form-group">
+                                <input type="text" name="search" class="form-control fill-tooltip-grow" placeholder="&{'search.description'}" alt="&{'search'}" title="&{'search'}" value="${params.search?.escape()?.raw()}">
+                                <span class="input-icon">
+                                    <i class="submit-search-form icon-search"></i>
+                                </span>
+                                #{if totalCount > 0 && params.search}
+                                    <div class="list-total-count">
+                                        (<a href="@{list()}">&{'crud.list.totalSize', totalCount}</a>)
+                                    </div>
+                                #{/if} 
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            #{if allowInsert == "true"}
+                <div class="col-md-6 btn-inline text-right">
+                    <button type="button" class="button_outline" onclick="javascript: location.href = '@{blank()}'; block();">&{'crud.add', type}</button>
+                </div>
+            #{/if}
+            </div>
+        #{/form}
+        #{crud.table fields:['title','userGroup.name','registryDate','limitDate','surveys','status'], sort: ['title','userGroup.name','status','registryDate','limitDate']}
+            #{crud.custom 'title'}
+                   ${object.title.length() > 20 ? object.title[0..20] + '…' : object.title}
+            #{/crud.custom }
+            #{crud.custom 'userGroup.name'}
+                ${object.userGroup?.name?.length() > 20 ? object.userGroup?.name[0..20] + '…' : object.userGroup?.name}
+            #{/crud.custom}
+            #{crud.custom 'status'}
+                &{common.utils.DomainUtil.getStatus().get(object.status)}
+            #{/crud.custom}
+            #{crud.custom 'surveys'}
+                ${object.getDescLstSurveys()}
+            #{/crud.custom}
+            #{crud.custom 'registryDate'}
+                ${object.registryDate.format()}
+            #{/crud.custom}
+            #{crud.custom 'limitDate'}
+                ${object.limitDate.format()}
+            #{/crud.custom}
+        #{/crud.table}
+        #{crud.pagination /}
+    </div>
+</div>

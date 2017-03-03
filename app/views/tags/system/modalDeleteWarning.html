@@ -1,0 +1,22 @@
+
+<!-- Modal -->
+<div class="modal fade" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="modal_deleteLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">&{'title.modal.warning'}</h4>
+            </div>
+            <div class="modal-body" style="margin-bottom: 15px;">
+                <font id="messageConfirm">${_warningMessage}</font>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button_medium_outline btn-modal" onclick="javascript: $('#' + '${_formId}').submit()">&{'yes'}</button>
+                <button type="button" class="button_medium_outline btn-modal" data-dismiss="modal">&{'no'}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Modal -->

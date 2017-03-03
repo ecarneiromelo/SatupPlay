@@ -1,0 +1,97 @@
+#{extends '_layout/body-guest.html' /}
+
+<div class="row">
+    <div class="col-md-12  mobile-hide">
+        <h2>&{'pages.survey.number', surveyNumber}</h2>
+        <br />
+    </div>
+    <!-- End col-md-12-->
+</div>
+<!-- End row-->
+<div class="row" id="questao">
+    <div class="col-md-12 add_bottom_30" style="left: 0px; top: 0px">
+    
+        ${play.i18n.Messages.get('pages.question.progress', String.valueOf(progressValue))}
+        
+        <div class="progress">
+            <div class="progress-bar" role="progressbar"
+                aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+                style="width: ${progressValue}%"></div>
+        </div>
+        
+        #{if showDoseDescription}        
+        <button class="button_medium_outline" data-toggle="modal" data-target="#myModal">
+        &{'survey.alcoholism.desc.dose.as.follows'}
+        </button>
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>
+                        <h4 class="modal-title" id="myModalLabel">&{'survey.alcoholism.desc.dose.definition'}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>&{'survey.alcoholism.desc.dose.oms'}</h4>
+                        <p>                        
+                            <img alt="" src="${play.ctxPath}/public/matemart/img/standard-drinks-${lang}.png" width="90%" height="90%">
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class=" button_medium_outline" data-dismiss="modal">
+                        &{'crud.close'}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #{/if}        
+                
+        #{if survey.description}
+        <p style="text-align: left;">
+            &{survey.description}
+        </p>
+        #{/if}
+        <h3 style="text-align: left;">
+            <span>${questionNumber} - &{question.question}</span>
+        </h3>
+        <br>
+        #{set selected: ""/}
+        #{list items:question.lstQuestionOptions, as:'questionOption'}
+            #{set 'selected'}#{if answer && answer.questionOption.question.id == questionOption.question.id && answer.questionOption.option.id == questionOption.option.id}${questionOption.option.id + "_id"}#{/if}#{/set}         
+                
+            #{form action:@showNextQuestion(id, linkCode, survey.id, question.id, questionOption.option.id)}
+                <button id="${questionOption.option.id}_id" class="button_fullwidth ${selected}">&{questionOption.option.option}</button> &nbsp;
+            #{/form}
+        #{/list}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 add_bottom_30">
+        #{form action:@showPreviousQuestion(id, linkCode, survey.id, question.id)}
+            <button class="button_outline medium" onclick="javascript: blockForQuestion();">&{'crud.back'}</button>
+        #{/form}
+    </div>
+</div>
+
+#{system.modalFaq /}
+
+#{set 'moreScripts_layout'}
+    <script type="text/javascript">
+        // --- Safari HACK
+        $('.button_fullwidth').removeClass('selected');
+        $('#${answer?.questionOption?.option?.id}_id').addClass('selected');
+        // ---
+        
+        $(function() {
+            $('.button_fullwidth').on('click',function(e) {
+                blockForQuestion();
+            });            
+            function jumpto(anchor){
+                window.location.href = "#" + anchor;
+            }
+            jumpto('questao');
+        });
+    </script>
+#{/set}

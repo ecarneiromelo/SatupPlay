@@ -1,0 +1,338 @@
+#{form action:@list().remove('page'), method:'GET', id:'searchForm'}
+    <div class="row">
+        %{ if(_allowDateFilter == null || _allowDateFilter == true) { }%
+        <div class="col-md-6">
+            #{field 'fromDate'}  
+                <div class="form-group row ${field.errorClass ? 'has-error' : ''}">
+                    <div class="col-xs-12">
+                        <div class="datetimepicker-date input-group date ">
+                            <input type="text" id="${field.id}" name="${field.name}" class="form-control no-right-border fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="${_caller.fromDate?.format()}">
+                            <span id="${field.id}_icon" class="input-icon"></span>
+                            <span id="${field.id}_icon_date" class="input-group-addon add-on">
+                                <b class="entypo-calendar"></b>
+                            </span>
+                        </div>
+                        #{ifError field.name}
+                            <span class="help-block col-xs-12 help-blockDate">${field.error.raw()}</span>
+                        #{/ifError}
+                    </div>
+                </div>
+            #{/field}
+        </div>
+        <div class="col-md-6">
+            #{field 'toDate'}  
+                <div class="form-group row ${field.errorClass ? 'has-error' : ''}">
+                    <div class="col-xs-12">
+                        <div class="datetimepicker-date input-group date ">
+                            <input type="text" id="${field.id}" name="${field.name}" class="form-control no-right-border fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="${_caller.toDate?.format()}">
+                            <span id="${field.id}_icon" class="input-icon"></span>
+                            <span id="${field.id}_icon_date" class="input-group-addon add-on">
+                                <b class="entypo-calendar"></b>
+                            </span>
+                        </div>
+                        #{ifError field.name}
+                            <span class="help-block col-xs-12 help-blockDate">${field.error.raw()}</span>
+                        #{/ifError}
+                    </div>
+                </div>
+            #{/field}
+        </div>
+        %{ } }%
+        <div class="col-md-12">
+            #{field 'userGroupId'}
+                <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
+                    <div id="userGroupId_div" class="styled-select">
+                        #{select field.name, value: _caller.userGroupId, id:field.id, class:'form-control fill-tooltip-grow', alt: play.i18n.Messages.get('client'), title: play.i18n.Messages.get('client')}
+                            #{option}&{'select.value.client'}#{/option}
+                            #{list items: models.UserGroupBO.findByProgramSentDate(_caller.fromDate, _caller.toDate), as:'item'}
+                                #{option item.id}${item}#{/option}
+                            #{/list}
+                        #{/select}
+                        #{ifError field.name}
+                            <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                        #{/ifError}
+                    </div>
+                </div>
+            #{/field}
+        </div>
+        <div class="col-md-12">
+            #{field 'selectedProgramId'}
+                <div id="programId_div" class="form-group ${field.errorClass ? 'has-error' : ''} text-left" style="display: none;">
+                    <div id="programSelectId_div" class="styled-select">
+                        #{select field.name, value: _caller.selectedProgramId, id:field.id, class:'form-control fill-tooltip-grow', alt: play.i18n.Messages.get('programId'), title: play.i18n.Messages.get('programId')}
+                            #{option}&{'select.value.program'}#{/option}
+                        #{/select}
+                        #{ifError field.name}
+                            <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                        #{/ifError}
+                    </div>
+                </div>
+            #{/field}
+        </div>
+        %{ if(_allowRespondentFilter == null || _allowRespondentFilter == true) { }%
+        <div class="col-md-12">
+            #{field 'selectedRespondentId'}
+                <div id="respondentId_div" class="form-group ${field.errorClass ? 'has-error' : ''} text-left" style="display: none;">
+                    <div id="respondentSelectId_div" class="styled-select">
+                        #{select field.name, value: _caller.selectedRespondentId, id:field.id, class:'form-control fill-tooltip-grow', alt: play.i18n.Messages.get('respondentId'), title: play.i18n.Messages.get('respondentId')}
+                            #{option}&{'select.value.respondent'}#{/option}
+                        #{/select}
+                        #{ifError field.name}
+                            <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                        #{/ifError}
+                    </div>
+                </div>
+            #{/field}
+        </div>
+        %{ } }%
+        <div id="searchButton_div" class="col-md-12 text-center" style="display: none;">
+            %{ if(_useViewExcelButton == true) { }%
+                <button id="query-data" type="${_disableSearchButton ? 'button' : 'submit'}" class="button_medium btn-file-responsive"  >&{'view.excel'}</button>
+            %{ } else { }%
+                <button id="query-data" type="${_disableSearchButton ? 'button' : 'submit'}" class="button_medium btn-file-responsive" onclick="${_disableSearchButton ? '' : 'javascript:  block();'}">&{'report.query'}</button>
+            %{ } }%
+        </div>
+    </div>
+#{/form}
+
+#{set 'moreScripts_tags'}
+    <script type="text/javascript">
+        $(function() {
+
+        	var emptyList = "&{'crud.empty.list'}";
+        	var clientEmptyOption = "&{'select.value.client'}";
+        	var programEmptyOption = "&{'select.value.program'}";
+        	var respondentEmptyOption = "&{'select.value.respondent'}";
+        	
+        	var fromDateElement = $('#fromDate');
+        	var toDateElement = $('#toDate');
+        	
+        	var userGroupIdElement = $('#userGroupId');
+        	var programIdElement = $('#selectedProgramId');
+        	var respondentIdElement = $('#selectedRespondentId');
+        	
+        	var userGroupIdDivElement = $('#userGroupId_div');
+        	var programIdDivElement = $('#programId_div');
+        	var programSelectedIdDivElement = $('#programSelectId_div');
+        	var respondentIdDivElement = $('#respondentId_div');
+        	var respondentSelectIdDivElement = $('#respondentSelectId_div');
+        	
+        	var searchButtonDivElement = $('#searchButton_div');
+        	
+        	var clearCallerParams = false;
+        	
+        	// events
+        	fromDateElement.on('blur',function(e) {
+        		clearAll();
+        		loadUserGroups($(this).val(), toDateElement.val());
+    	    });
+        	
+            toDateElement.on('blur',function(e) {
+                clearAll();
+                loadUserGroups(fromDateElement.val(), $(this).val());
+            });
+            
+            userGroupIdElement.on('change',function(e) {
+            	$('.graphs').hide();
+            	clearCrudTable();
+            	clearProgramCombobox();
+                clearRespondentCombobox();
+                respondentIdDivElement.hide();
+                searchButtonDivElement.hide();
+            	loadPrograms($(this).val(), fromDateElement.val(), toDateElement.val());
+            });
+            
+            programIdElement.on('change',function(e) {
+            	$('.graphs').hide();
+            	clearCrudTable();
+                clearRespondentCombobox();
+                loadRespondents($(this).val());
+            });
+            
+            respondentIdElement.on('change',function(e) {
+                clearCrudTable();
+            });
+            
+            // functions
+        	function clearAll() {
+        		clearCrudTable();
+        		clearUserGroupCombobox();
+        		clearProgramCombobox();
+        		clearRespondentCombobox();
+            	clearHelpMessages();
+        		respondentIdDivElement.hide();
+        		programIdDivElement.hide();
+        		searchButtonDivElement.hide();
+        		$('.graphs').hide();
+        	}
+            
+            function clearHelpMessages() {
+                programIdElement.removeClass('has-error');
+                programSelectedIdDivElement.removeClass('is-empty-select');
+                respondentIdDivElement.removeClass('has-error');
+                respondentSelectIdDivElement.removeClass('is-empty-select');
+                $('.help-block').html('');
+            }
+            
+            function clearCrudTable() {
+                $('#crudTable_id').hide();
+                $('.table-list-size').hide();
+                $('.crudPagination').hide();
+            }
+        	
+            function clearUserGroupCombobox() {
+                userGroupIdElement.empty();
+                userGroupIdElement.append($("<option></option>").attr("value", '').text(clientEmptyOption));
+                clearHelpMessages();
+            }
+            
+            function clearProgramCombobox() {
+                clearCallerParams = true;
+                programIdElement.empty();
+                programIdElement.append($("<option></option>").attr("value", '').text(programEmptyOption));
+                clearHelpMessages();
+            }
+            
+            function clearRespondentCombobox() {
+            	clearCallerParams = true;
+            	respondentIdElement.empty();
+            	respondentIdElement.append($("<option></option>").attr("value", '').text(respondentEmptyOption));
+            	clearHelpMessages();
+            }
+        	
+            function loadUserGroups(fromDate, toDate) {
+                block();
+                var newFunction = #{jsAction @loadUserGroups(':fromDate', ':toDate') /}; 
+                var renderUrl = newFunction({fromDate: '' + fromDate + '', toDate: '' + toDate + ''})
+                $.getJSON(renderUrl, function(data) {
+                	userGroupIdDivElement.removeClass('is-empty-select');
+                	if (data.length == 0) {
+                		clearProgramCombobox();
+                		programIdDivElement.hide();
+                		respondentIdDivElement.hide()
+                		searchButtonDivElement.hide();
+                		userGroupIdElement.empty();
+                		userGroupIdDivElement.addClass('is-empty-select');
+                		userGroupIdElement.append($("<option></option>").attr("value", '').text(emptyList));
+                	} else {
+                		clearUserGroupCombobox()
+                	}
+                    $.each(data, function(i, el) {
+                        userGroupIdElement.append($("<option></option>").attr("value", el.id).text(el.name));
+                    });
+                }).error(function(data) {
+                    clearAll();
+                    fromDateElement.val('');
+                    toDateElement.val('');
+                    loadUserGroups(null, null);
+                    $.Notification.autoHideNotify(
+                        '#searchForm'
+                        ,'error'
+                        , 'top center'
+                        , '&{"title.error"}'
+                        , '&{"message.error.operation.failed"}'
+                    );
+                }).always(function(data) {
+                    $.unblockUI();
+                });
+            }
+            
+            function loadPrograms(userGroupId, fromDate, toDate) {
+                if (userGroupId !== undefined && userGroupId != '' && !isNaN(userGroupId)) {
+                    block();
+                    var newFunction = #{jsAction @loadPrograms(':userGroupId', ':fromDate', ':toDate') /}; 
+                    var renderUrl = newFunction({userGroupId: '' + userGroupId + '', fromDate: '' + fromDate + '', toDate: '' + toDate + ''})
+                    $.getJSON(renderUrl, function(data) {
+                    	programSelectedIdDivElement.removeClass('is-empty-select');
+                        if (data.length == 0) {
+                        	clearRespondentCombobox();
+                        	respondentIdDivElement.hide();
+                            searchButtonDivElement.hide();
+                            programIdElement.empty();
+                            programSelectedIdDivElement.addClass('is-empty-select');
+                            programIdElement.append($("<option></option>").attr("value", '').text(emptyList));
+                        }
+                        $.each(data, function(i, el) {
+                            programIdElement.append($("<option></option>").attr("value", el.id).text(el.title));
+                        });
+                        programIdDivElement.show();
+                    }).done(function(data) {
+                        #{if _caller.selectedProgramId != null}
+                            if (!clearCallerParams) {
+                                programIdElement.val(${_caller.selectedProgramId});
+                            }
+                        #{/if}    
+                    }).error(function(data) {
+                        clearAll();
+                        fromDateElement.val('');
+                        toDateElement.val('');
+                        loadUserGroups(null, null);
+                        $.Notification.autoHideNotify(
+                            '#searchForm'
+                            ,'error'
+                            , 'top center'
+                            , '&{"title.error"}'
+                            , '&{"message.error.operation.failed"}'
+                        );
+                    }).always(function(data) {
+                        $.unblockUI();
+                    });
+                } else {
+                	programIdDivElement.hide();
+                	respondentIdDivElement.hide()
+                }
+            }
+            
+            function loadRespondents(programId) {
+                if (programId !== undefined && programId != '' && !isNaN(programId)) {
+                    block();
+                    var newFunction = #{jsAction @loadRespondents(':programId') /}; 
+                    var renderUrl = newFunction({programId: '' + programId + ''})
+                    $.getJSON(renderUrl, function(data) {
+                    	respondentSelectIdDivElement.removeClass('is-empty-select');
+                        if (data.length == 0) {
+                            respondentIdElement.empty();
+                            respondentSelectIdDivElement.addClass('is-empty-select');
+                            respondentIdElement.append($("<option></option>").attr("value", '').text(emptyList));
+                        }
+                        $.each(data, function(i, el) {
+                        	respondentIdElement.append($("<option></option>").attr("value", el.id).text(el.name));
+                        });
+                        respondentIdDivElement.show();
+                        searchButtonDivElement.show();
+                    }).done(function(data) {
+                        #{if _caller.selectedRespondentId != null}
+                            if (!clearCallerParams) {
+                                respondentIdElement.val(${_caller.selectedRespondentId});
+                            }
+                        #{/if}    
+                    }).error(function(data) {
+                        clearAll();
+                        fromDateElement.val('');
+                        toDateElement.val('');
+                        loadUserGroups(null, null);
+                        $.Notification.autoHideNotify(
+                            '#searchForm'
+                            ,'error'
+                            , 'top center'
+                            , '&{"title.error"}'
+                            , '&{"message.error.operation.failed"}'
+                        );
+                    }).always(function(data) {
+                        $.unblockUI();
+                    });
+                } else {
+                	respondentIdDivElement.hide();
+                    searchButtonDivElement.hide();                  
+                }
+            }
+            
+            #{if _caller.userGroupId != null}
+                loadPrograms('${_caller.userGroupId}', '${_caller.fromDate?.format()}', '${_caller.toDate?.format()}');
+            #{/if}
+            #{if _caller.selectedProgramId != null}
+                loadRespondents('${_caller.selectedProgramId}');
+            #{/if}
+        });
+    </script>
+#{/set}

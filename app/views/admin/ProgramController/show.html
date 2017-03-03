@@ -1,0 +1,158 @@
+#{extends 'admin/ProgramController/base.html' /}
+#{set allowInsert:"${!blockInsert}" /}
+#{set allowUpdate:"${!blockUpdate}" /}
+#{set allowDelete:"${!blockDelete}" /}
+
+<h2>&{'crud.show.title', type.modelName}</h2>
+<div class="step">
+    <div id="middle-wizard">
+        #{if object.status == common.constants.DomainConstants.WAITING_RESPONDENT}
+            #{system.addDeleteButton objectId:object._key() /}
+        #{/if}
+        #{form action:@save(object._key()), enctype:'multipart/form-data'}
+			 #{crud.form }
+                #{crud.custom 'userGroup'}
+                #{/crud.custom} 
+                #{crud.custom 'showReport'}
+                #{/crud.custom}
+                
+                
+                #{crud.custom 'user'} 
+                 <hr style="border-top: 3px solid #eee; margin-top: 3em;">
+                 <h3 style="text-align: left;">&{'client'}</h3>
+                    #{field 'userGroup.name'}
+                        <div class="form-group ${field.errorClass ? 'has-error' : ''}">
+                            <input type="text" id="${field.id}" name="${field.name}" class="form-control fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="${field.value}" />
+                            <span id="object_user_userGroup_name_icon" class="input-icon">
+                                <i class="icon-building"></i>
+                            </span>
+                            #{ifError field.name}
+                                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                            #{/ifError} 
+                        </div>
+                    #{/field}
+                    <hr style="border-top: 3px solid #eee; margin-top: 3em;">
+                    <h3 style="text-align: left;">&{'representative'}</h3>
+                    #{field 'user.name'}
+                        <div class="form-group ${field.errorClass ? 'has-error' : ''}">
+                            <input type="text" id="${field.id}" name="${field.name}" class="form-control fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="${object.user.name}" />
+                            <span id="object_user_name_icon" class="input-icon">
+                                <i class="icon-user""></i>
+                            </span>
+                            #{ifError field.name}
+                                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                            #{/ifError} 
+                        </div>
+                    #{/field}
+                    #{field 'user.email'}
+                        <div class="form-group ${field.errorClass ? 'has-error' : ''}">
+                            <input type="text" id="${field.id}" name="${field.name}" class="form-control fill-tooltip-grow" placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="${object.user.email}" />
+                            <span id="object_object_user_email_icon" class="input-icon">
+                                <i class="icon-email"></i>
+                            </span>
+                            #{ifError field.name}
+                                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                            #{/ifError} 
+                        </div>
+                    #{/field}
+                #{/crud.custom}
+                #{crud.custom 'limitDate'}
+                    #{field 'object.limitDate'}
+                            <div class="form-group row ${field.errorClass ? 'has-error' : ''}">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="datetimepicker-date input-group date ">
+                                        <input type="text" id="${field.id}" name="${field.name}" class="form-control no-right-border fill-tooltip-grow" placeholder="&{'object.limit'}" alt="&{'object.limit'}" title="&{'object.limit'}" value="${field.value?.format()}">
+                                        <span id="${field.id}_icon" class="input-icon"></span>
+                                        <span id="${field.id}_icon_date" class="input-group-addon add-on">
+                                            <b class="entypo-calendar"></b>
+                                        </span>
+                                    </div>
+                                    #{ifError field.name}
+                                        <span class="help-block col-xs-12 help-blockDate">${field.error.raw()}</span>
+                                    #{/ifError}
+                                </div>
+                            </div>
+                    #{/field}
+                #{/crud.custom}
+                #{crud.custom 'hasTreatment'}
+                    #{field 'object.hasTreatment'}
+                        <div class="form-group row text-left ${field.errorClass ? 'has-error' : ''}">
+                             <div class="col-xs-12">
+                                <div class="col-xs-12 col-md-6" style="padding: 0px; margin-bottom: 0.5em;">
+                                    <input type="radio" name="${field.name}" value="true" ${field.value == true ? 'checked="true" '.raw() : ''} />
+                                    <span style ="${field.errorClass ? 'color: #a94442;' : ''}" >&{'diagnosis.and.treatment'}</span>
+                                </div>
+                                <div class="col-xs-12 col-md-6" style="padding: 0px; margin-bottom: 0.5em;">
+                                    <input type="radio" name="${field.name}" value="false" ${field.value == false ? 'checked="true" '.raw() : ''} />
+                                    <span style ="${field.errorClass ? 'color: #a94442;' : ''}" >&{'exclusive.diagnosis'}</span>
+                                </div>
+                                #{ifError field.name}
+                                    <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                                #{/ifError}
+                            </div>
+                        </div>
+                    #{/field}                
+                #{/crud.custom}
+                #{crud.custom 'language'}
+                    #{field 'object.language'}
+                    #{set currentLang: models.ProgramBO.LanguageSetting.get(lang)?.tag()/}        
+                    <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left" >
+                        <div class="styled-select fill-tooltip-grow" alt="${play.i18n.Messages.get(field.name)}"  title="${play.i18n.Messages.get(field.name)}">
+                            #{select field.name, value: field.value, id:field.id, class:'form-control disabled-mouse'}                    
+                                <option value="">&{'select.value.language'}</option>     
+                                #{list items:models.ProgramBO.LanguageSetting.values(), as:'language'}                                                                                             
+                                    <option name="${language.name()}" ord="${language.ordinal()}" value="${language.name()}" ${language.equals(field.value) ? 'selected="true"'.raw() : ''}>&{language.tag() + '.translate'}</option>                                                                
+                                #{/list}  
+                            #{/select}                
+                            #{ifError field.name}
+                                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                            #{/ifError}
+                        </div>
+                    </div>
+                    #{/field}
+                #{/crud.custom}
+            #{/crud.form }
+                #{system.addCrudButtons /}
+        #{/form}
+    </div>
+</div>
+
+#{set 'moreStyles'}
+<style>
+<!--
+.disabled-mouse[disabled] { 
+    pointer-events: none;
+}
+-->
+</style>
+#{/set}
+
+#{set 'moreScripts_cruds'}
+    <script type="text/javascript">
+        
+        function setReadonly() {
+            $(":checkbox,:radio").bind("click", false);
+            $('.custom-muilt-check-box').css('background-color', '#eeeeee');
+            $('#user_email').prop('readonly', 'readonly');
+            $('#object_object_user_email_icon').css('background-color', '#eeeeee');
+            $('#user_name').prop('readonly', 'readonly');
+            $('#object_user_name_icon').css('background-color', '#eeeeee');
+            $('#userGroup_name').prop('readonly', 'readonly');
+            $('#object_user_userGroup_name_icon').css('background-color', '#eeeeee');
+            $('#object_dispatchDate').prop('readonly', 'readonly');
+            $('#object_dispatchDate_icon_date').css('background-color', '#cacacb');
+            $('#object_mailSubject').prop('readonly', 'readonly');
+            $('#object_mailSubject_icon').css('background-color', '#eeeeee');
+            $('#object_title').prop('readonly', 'readonly');
+            $('#object_title_icon').css('background-color', '#eeeeee');   
+            $('.styled-select').css('background-color', '#eeeeee');
+            $('#object_language').prop('disabled', 'disabled');
+        }
+
+        $(function() {
+            #{if object.status == common.constants.DomainConstants.IN_PROGRESS || object.status == common.constants.DomainConstants.CLOSED}
+                setReadonly();
+            #{/if}            
+        });
+    </script>
+#{/set}

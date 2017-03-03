@@ -1,0 +1,28 @@
+
+#{field 'object.' + _name}
+<div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
+    <div class="styled-select">
+        #{select field.name, value: field.value, id:field.id, class:'form-control fill-tooltip-grow', alt: play.i18n.Messages.get(field.name), title: play.i18n.Messages.get(field.name)}                    
+            #{ifnot _property.required}
+                <option value="">&{'crud.none'}</option>
+            #{/ifnot}
+            #{else}
+                <option value="">&{'crud.selectValue'}</option>
+            #{/else}                    
+            %{ _property.choices.each() { }%
+            %{
+                    selected = false;
+                    if(field.error?.message != 'validation.required') {
+                        selected = it == _value;
+                    }
+                    label = _property.typeName + "." + it.toString()
+            }%               
+            <option name="${it.name()}" ord="${it.ordinal()}" value="${it.name()}" ${selected ? 'selected="true"'.raw() : ''}>&{label}</option>
+            %{ } }%
+        #{/select}
+        #{ifError field.name}
+            <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+        #{/ifError}
+    </div>
+</div>
+#{/field}

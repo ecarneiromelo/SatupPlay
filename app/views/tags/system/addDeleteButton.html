@@ -1,0 +1,8 @@
+#{if allowDelete == "true"}
+    #{form @delete(_objectId), id:'deleteForm'}
+        <p class="crud-delete">
+            <button class="button_red" type="button" name="_delete" data-toggle="modal" data-target="#modal_delete">&{'crud.delete'}</button>
+        </p>
+    #{/form}
+    #{system.modalDeleteWarning formId: 'deleteForm', warningMessage: messages.get('message.warning.delete') /}
+#{/if}

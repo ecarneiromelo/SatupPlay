@@ -1,0 +1,72 @@
+#{extends '_layout/body-guest.html' /}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- Headings & Paragraph Copy -->
+        <h2>&{'system.title'}</h2>        
+        
+        #{set 'conjunction'}
+            &{'conjunction.and'}
+        #{/set}
+        &{'pages.diagnosis.thanks', (gender == 'F' ? 'a' : 'o'), userName, common.utils.PhraseConstructorUtil.constructConjunction(surveyTypes, conjunction)}     
+        
+        #{set 'diagnosis'}          
+            #{list items:objects, as:'object'}
+                #{if !object.scoreClass.normal} 
+                    <li>&{object.scoreClass.description}.</li>
+                    #{set problemsDetected: true /}                        
+                #{/if}
+            #{/list}
+        #{/set}
+        
+        #{if problemsDetected}        
+            &{'pages.diagnosis.result.problems', diagnosis}  
+        #{/if}
+        #{else}   
+            &{'pages.diagnosis.result.no.problems'}            
+        #{/else}
+  
+        #{if showConclusionTerm}
+            #{if problemsDetected}
+                #{if hasTreatment}               
+                    &{'pages.diagnosis.problems.treatment'}
+                #{/if}
+                #{else}
+                    &{'pages.diagnosis.problems'}
+                #{/else}      
+            #{/if}
+            #{else} 
+                &{'pages.diagnosis.no.problems'}   
+            #{/else}
+            <div class="row">                
+                <div class="col-md-12 ">
+                      #{form action:@finishSurvey(id, linkCode), style:'display: inline;'}                      
+                          <p>
+                              <input style="text-align: left;" type="radio" name="orientationRequested" value="true" checked="checked"><span lang="pt-br"> </span>&{'pages.diagnosis.request.orientation'}
+                          </p>                      
+                          <p>
+                              <input type="radio" name="orientationRequested" value="false">
+                              <span lang="pt-br"> </span>&{'pages.diagnosis.request.no.orientation'}
+                          </p>                             
+                          <p class="add_bottom_30">
+                              <button class="button_outline medium_bold" onclick="javascript: blockForQuestion();">&{'pages.diagnosis.finish'}</button>
+                          </p>                      
+                      #{/form}   
+                      #{form action:@showPreviousQuestion(id, linkCode, -1, -1), style:'display: inline;'}    
+                          <p class="add_bottom_30">
+                              <button class="button_outline medium" onclick="javascript: blockForQuestion();">&{'crud.back'}</button>
+                          </p>     
+                      #{/form}                          
+                </div>
+            </div>
+          #{/if}   
+          &{'pages.survey.term.sincerely'}
+          <div><img alt="" src="@{'/public/matemart/img/assinatura.jpg'}"></div>
+          &{'pages.survey.term.signature'}
+          <p></p>
+          <i>&{'pages.diagnosis.confidencial.term'}</i>
+    </div>
+    <!-- End col-md-12-->
+</div>
+<!-- End row-->

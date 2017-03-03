@@ -1,0 +1,65 @@
+#{extends '_layout/layout.html' /}
+<div class="modal-header" style="padding: 10px 20px;">
+    <button type="button" class="close" aria-hidden="true" onclick="javascript: window.parent.$.featherlight.current().close();">×</button>
+    <h4>&{'secure.forgot.passwd'}</h4>${closeModal}
+</div>
+<div id="message-contact"></div>
+#{form @guest.ResetPasswdController.resetPassword(), enctype:'multipart/form-data', id:'resetPassForm', role:'form'}
+    <div class="modal-body">    
+        #{field 'username'}
+            <div class="col-md-12 col-sm-12 ${field.errorClass ? 'has-error' : ''}">
+                <div class="form-group form-group-margin-botton-15">
+                    <input type="email" id="${field.id}" name=${field.name} class="form-control" placeholder="&{'secure.email'}" value="${username}">
+                    <span class="input-icon"><i class="icon-email"></i></span>
+                    #{ifError field.name}
+                        <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                    #{/ifError} 
+                </div>
+            </div>
+        #{/field}             
+        #{field 'captchaCode'}                           
+            <div class="col-md-12 col-sm-12 ${field.errorClass ? 'has-error' : ''}">
+                <img alt="&{'captcha.code'}" src="@{base.BaseCRUDController.renderCaptcha(captchaUuid)}" style="height: 40px;"/>
+                <div class="form-group form-group-margin-botton-15">
+                    <input type="text" id="${field.id}" name=${field.name} class="form-control " placeholder="&{field.name}">
+                    <input type="hidden" name="captchaUuid" value="${captchaUuid}" />
+                    #{ifError field.name}
+                        <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                    #{/ifError} 
+                </div>
+            </div>   
+        #{/field}         
+        <div class="col-md-12 col-sm-12">
+            <input type="submit" class="button_medium" value="&{'secure.send'}" />
+        </div>                    
+        <div class="modal-footer" style="padding: 19px 20px 0px; height: 58px; margin-top: 0px;">
+            <button type="button" class="button_medium_outline" style="margin-bottom: 0px;" onclick="javascript: window.parent.$.featherlight.current().close();">&{'crud.close'}</button>
+        </div>
+    </div>
+#{/form}
+
+#{set 'moreScripts_layout'}
+    <script type="text/javascript">
+        // Secure reset pass
+        $(function() {
+            #{if flash.success || success}
+                $.Notification.autoHideNotify(
+                        '#username'
+                        , 'success'
+                        , 'top center'
+                        , '&{"title.success"}'
+                        , '&{success ?: flash.success}'
+                );
+            #{/if} 
+            #{if flash.error || error}
+                $.Notification.autoHideNotify(
+                        '#username'
+                        ,'error'
+                        , 'top center'
+                        , '&{"title.error"}'
+                        , '&{error ?: flash.error}'
+                );
+            #{/if}
+        });
+    </script>
+#{/set}
