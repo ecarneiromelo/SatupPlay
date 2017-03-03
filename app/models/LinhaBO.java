@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import controllers.CRUD;
+import play.db.jpa.Model;
 
 
 /**
@@ -12,11 +13,8 @@ import controllers.CRUD;
  */
 @Entity
 @Table(name="tb_linha")
-public class LinhaBO extends CRUD implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class LinhaBO extends Model  {
 
-	@Id
-	private Long id;
 
 	@Column(name="ds_linha")
 	private String dsLinha;

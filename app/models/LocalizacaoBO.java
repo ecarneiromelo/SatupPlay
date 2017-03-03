@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import controllers.CRUD;
+import play.db.jpa.Model;
 
 import java.sql.Timestamp;
 
@@ -14,11 +15,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="tb_localizacao")
-public class LocalizacaoBO extends CRUD implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	private Long id;
+public class LocalizacaoBO extends Model {
 
 	@Column(name="ds_datehora")
 	private Timestamp dsDatehora;

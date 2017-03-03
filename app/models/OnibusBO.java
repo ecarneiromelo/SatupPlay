@@ -1,11 +1,13 @@
 package models;
 
-import java.io.Serializable;
-import javax.persistence.*;
-
-import controllers.CRUD;
-
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import play.db.jpa.Model;
 
 
 /**
@@ -14,11 +16,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="tb_onibus")
-public class OnibusBO extends CRUD implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class OnibusBO extends Model {
 
-	@Id
-	private Long id;
 
 	@Column(name="ds_numero")
 	private String dsNumero;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import controllers.CRUD;
+import play.db.jpa.Model;
 
 
 /**
@@ -12,11 +13,7 @@ import controllers.CRUD;
  */
 @Entity
 @Table(name="tb_parada")
-public class ParadaBO extends CRUD implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	private Long id;
+public class ParadaBO extends Model {
 
 	@Column(name="ds_nome")
 	private String dsNome;
