@@ -1,42 +1,39 @@
 #{extends '_layout/body.html' /}
+<!-- Wrapper -->
+    <div class="wrapper">
+	    <div class="navigation">
+	        <div class="container">
+	            <header class="navbar" id="top" role="banner">
+	                <div class="navbar-header">
+	                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+	                        <span class="sr-only">Toggle navigation</span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                    </button>
+	                    <div class="navbar-brand nav" id="brand">
+	                        <a href="index-google-map-fullscreen.html">Satup</a>
+	                    </div>
+	                </div>
+	                <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+	                    <ul class="nav navbar-nav">
+	                        <li><a href="#">Pagina Inicial</a></li>
+	                        <li><a href="#">Login</a></li>
+	                        <li><a href="#">Contato</a></li>
+	                    </ul>
+	                </nav><!-- /.navbar collapse-->
+	            </header><!-- /.navbar -->
+	        </div><!-- /.container -->
+	    </div><!-- /.navigation -->
+    </div>
+    <div class="container">
+        <div class="geo-location-wrapper">
+            <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-md-12">
-        #{doLayout /}
+    <!-- Map -->
+    <div id="map"></div>
+    <!-- end Map -->
     </div>
 </div>
-
-#{set 'moreScripts_layout'}
-    <script type="text/javascript">
-        // CRUD layout
-        $(function() {
-        	#{if flash.success || success}
-            	$.Notification.autoHideNotify(
-            			'#middle-wizard'
-            			, 'success'
-            		    , 'top center'
-            		    , '&{"title.success"}'
-            		    , '${success ?: flash.success}'
-            	);
-        	#{/if} 
-    		#{if flash.error || error}
-                $.Notification.autoHideNotify(
-                		'#middle-wizard'
-                        ,'error'
-                        , 'top center'
-                        , '&{"title.error"}'
-                        , '${error ?: flash.error}'
-                );
-            #{/if}
-        	#{if flash.warning}
-                $.Notification.autoHideNotify(
-                		'#middle-wizard'
-                        ,'warning'
-                        , 'top center'
-                        , '&{"title.warning"}'
-                        , '${flash.warning}'
-                );
-            #{/if}
-        });
-    </script>
-#{/set}

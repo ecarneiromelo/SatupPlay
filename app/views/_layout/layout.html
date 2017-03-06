@@ -1,194 +1,53 @@
 ﻿<!DOCTYPE html>
-<!--[if IE 8 ]>
-<html class="ie ie8" lang="en">
-<![endif]-->
-<!--[if IE 9 ]>
-<html class="ie ie9" lang="en">
-<![endif]-->
+
 <html lang="pt-br">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <!-- Generall Metatags -->
-        <meta name="description" content="&{'system.description'}">
-        <meta name="keywords" content="&{'system.keywords'}" />
-        <!-- Optional Metatags -->
-        <meta name="copyright" content="&{'system.copyright='}" />
-        <meta name="author" content="&{'system.author'}"/>
-        <meta name="revisit-after" content="7 days" />
-        <!-- Canonical URL -->
-        <link rel="canonical" href="${play.ctxPath}" />
-
-        <title>&{'system.author'}</title>
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <!-- Favicons-->
-        <link rel="shortcut icon" href="@{'/public/matemart/img/favicon.ico'}" type="image/x-icon">
-        <link rel="apple-touch-icon" type="image/x-icon" href="@{'/public/matemart/img/apple-touch-icon-57x57-precomposed.png'}">
-        <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="@{'/public/matemart/img/apple-touch-icon-72x72-precomposed.png'}">
-        <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="@{'/public/matemart/img/apple-touch-icon-114x114-precomposed.png'}">
-        <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="@{'/public/matemart/img/apple-touch-icon-144x144-precomposed.png'}">
-        <!-- CSS -->
-        <link href="@{'/public/matemart/css/bootstrap.min.css'}" rel="stylesheet">
-        <link href="@{'/public/matemart/css/superfish.css'}" rel="stylesheet">
-        <link href="@{'/public/matemart/css/style.css'}" rel="stylesheet">
-        <link href="@{'/public/matemart/fontello/css/fontello.css'}" rel="stylesheet">
-        <!-- color scheme css -->
-        <link href="@{'/public/matemart/css/color_scheme.css'}" rel="stylesheet">        
-        <!-- Brisa css -->
-        <link rel="stylesheet" type="text/css" href="@{'/public/velonic/assets/datatables/jquery.dataTables.min.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/velonic/assets/font-awesome/css/font-awesome.css'}"/>
-        
-        <link rel="stylesheet" type="text/css" href="@{'/public/velonic/assets/font-awesome/css/font-awesome.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/velonic/assets/notifications/notification.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/velonic/assets/ionicon/css/ionicons.min.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/entypo/entypo-icon.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/bootstrap-datetimepicker.min.css'}">
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/footable/footable.core.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/footable/footable.standalone.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/featherlight.min.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/tooltipster.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/themes/tooltipster-light.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/themes/tooltipster-noir.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/themes/tooltipster-punk.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/themes/tooltipster-shadow.css'}"/>
-        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/brisa-custom.css'}" >
-
-        #{get 'moreStyles' /}
-
-        <!--[if lt IE 9]>
-        <script src="http://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="http://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-        <script type="text/javascript" src="@{'/public/javascripts/shared-library.js'}"></script>
-        <script type="text/javascript">
-            SharedLibrary.setLang("${lang}");
-            var datetimepickerTooltipsMap = {
-                    'today':        "&{'datetimepicker.tooltip.today'}",
-                    'clear':        "&{'datetimepicker.tooltip.clear'}",
-                    'close':        "&{'datetimepicker.tooltip.close'}",
-                    'selectMonth':  "&{'datetimepicker.tooltip.select.month'}",
-                    'prevMonth':    "&{'datetimepicker.tooltip.previous.month'}",
-                    'nextMonth':    "&{'datetimepicker.tooltip.next.month'}",
-                    'selectYear':   "&{'datetimepicker.tooltip.select.year'}",
-                    'prevYear':     "&{'datetimepicker.tooltip.previous.year'}",
-                    'nextYear':     "&{'datetimepicker.tooltip.next.year'}",
-                    'selectDecade': "&{'datetimepicker.tooltip.select.decade'}",
-                    'prevDecade':   "&{'datetimepicker.tooltip.previous.decade'}",
-                    'nextDecade':   "&{'datetimepicker.tooltip.next.decade'}",
-                    'prevCentury':  "&{'datetimepicker.tooltip.previous.century'}",
-                    'nextCentury':  "&{'datetimepicker.tooltip.next.century'}"
-            };
-        </script>
-    </head>
+<head>
+  	<meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="EdivaldoCarneiro">
     
-    <body>
-        <script type="text/javascript">
-            // --- Safari HACK
-            window.onpageshow = function(event) {
-                if (event.persisted) {
-                    window.location.reload();
-                }
-            };
-            // --- 
-        </script>
-        
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+    <link href="@{'/public/assets/fonts/font-awesome.css'}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="@{'/public/assets/bootstrap/css/bootstrap.css'}" type="text/css">
+    <link rel="stylesheet" href="@{'/public/assets/css/bootstrap-select.min.css'}" type="text/css">
+    <link rel="stylesheet" href="@{'/public/assets/css/jquery.slider.min.css'}" type="text/css">
+    <link rel="stylesheet" href="@{'/public/assets/css/owl.carousel.css'}" type="text/css">
+    <link rel="stylesheet" href="@{'/public/assets/css/style.css'}" type="text/css">
+      #{get 'moreStyles' /}
+   <title>Satup</title>
+  </head>
+   <body class="page-homepage map-google horizontal-search-float" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
+		
         #{doLayout /}
+        <script type="text/javascript" src="@{'/public/assets/js/jquery-2.1.0.min.js'}"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jquery-migrate-1.2.1.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/bootstrap/js/bootstrap.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/smoothscroll.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/markerwithlabel_packed.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/infobox.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/owl.carousel.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/bootstrap-select.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jquery.validate.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jquery.placeholder.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/icheck.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jquery.vanillabox-0.1.5.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/retina-1.1.0.min.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jshashtable-2.1_src.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jquery.numberformatter-1.2.3.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/tmpl.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jquery.dependClass-0.1.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/draggable-0.1.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/jquery.slider.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/markerclusterer_packed.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/custom-map.js'}"></script>
+		<script type="text/javascript" src="@{'/public/assets/js/custom.js'}"></script>
+		<!--[if gt IE 8]>
+		<script type="text/javascript" src="@{'/public/assets/js/ie.js'}"></script>
+		<![endif]-->
+		<script type="text/javascript">
         
-        <!-- JQUERY -->    
-        <script type="text/javascript" src="@{'/public/matemart/js/jquery-1.10.2.min.js'}"></script>
-        <!-- OTHER JS --> 
-        <script type="text/javascript" src="@{'/public/matemart/js/superfish.js'}"></script>
-        <script type="text/javascript" src="@{'/public/matemart/js/bootstrap.min.js'}"></script>
-        <script type="text/javascript" src="@{'/public/matemart/js/jquery.placeholder.js'}"></script>
-        <script type="text/javascript" src="@{'/public/matemart/js/functions.js'}"></script>
-        <script type="text/javascript" src="@{'/public/matemart/js/classie.js'}"></script>
-        <script type="text/javascript" src="@{'/public/matemart/js/uisearch.js'}"></script>
-        <!-- BRISA scrpts -->
-        <script type="text/javascript" src="@{'/public/velonic/assets/notifications/notify.min.js'}"></script>
-        <script type="text/javascript" src="@{'/public/velonic/assets/notifications/notify-metro.js'}"></script>
-        <script type="text/javascript" src="@{'/public/javascripts/moment-with-locales.js'}"></script>
-        <script type="text/javascript" src="@{'/public/javascripts/bootstrap-datetimepicker.min.js'}"></script>
-        <script type="text/javascript" src="@{'/public/javascripts/jquery.blockUI.js'}"></script>
-        <script type="text/javascript" src="@{'/public/javascripts/jquery.tooltipster.min.js'}"></script>
-        <script type="text/javascript" src="@{'/public/javascripts/featherlight.min.js'}"></script>
-        <script type="text/javascript" src="@{'/public/javascripts/brisa-custom.js'}"></script>
-        <script type="text/javascript">
-            function block() {
-            	var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-            	if (!isSafari) {
-                    $.blockUI({  
-                        message: "<h3 style='margin-top: 7px; margin-bottom: 10px; text-transform: none;'>&{'wait'}</h3>",
-                        css: {
-                            border: 'none',
-                            padding: '15px', 
-                            backgroundColor: '#000', 
-                            '-webkit-border-radius': '10px', 
-                            '-moz-border-radius': '10px',
-                            'border-radius': '10px',
-                            opacity: .7, 
-                            color: '#fff'
-                        } 
-                    }); 
-            	}
-            }
-            function showModalIframe(url) {
-                $.featherlight({  
-                    closeIcon: null,
-                    iframe: url,
-                    iframeMaxWidth: '100%', 
-                    iframeMaxHeight: '100%', 
-                    iframeWidth: '100%',
-                    iframeHeight: '100%',
-                    loading: '<h4 class="text-center"> &{'wait'}</h4>'
-                });
-            }
-            function blockForQuestion(){
-                if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-                    block();
-                }
-            }
         </script>
-        
-        #{get 'moreScripts_layout' /}
-        #{get 'moreScripts_tags' /}
-        #{get 'moreScripts_cruds' /}
-        #{get 'moreScripts' /}
-        
-        <script type="text/javascript">
-            $(function() {
-                // Activate Tooltipster
-                $('.fill-tooltip').tooltipster({
-                    theme: 'tooltipster-light', // [light | noir | punk | shadow]
-                    animation: 'fall', // [fade | grow | swing | slide | fall]
-                    delay: 200,
-                    touchDevices: true,
-                    trigger: 'hover',
-                    arrow: true
-                });
-                $('.fill-tooltip-grow').tooltipster({
-                    theme: 'tooltipster-light', // [light | noir | punk | shadow]
-                    animation: 'grow', // [fade | grow | swing | slide | fall]
-                    delay: 200,
-                    touchDevices: true,
-                    trigger: 'hover',
-                    arrow: true
-                });
-                $('.fill-tooltip-left-slow').tooltipster({
-                    theme: 'tooltipster-light', // [light | noir | punk | shadow]
-                    animation: 'slide', // [fade | grow | swing | slide | fall]
-                    delay: 300,
-                    touchDevices: true,
-                    trigger: 'hover',
-                    arrow: true
-                });
-                
-                // Adding event to search buttons
-                $('.submit-search-form').click(function() {
-                    $('#searchForm').submit();
-                    block();
-                });
-            });
-        </script>           
+        #{get 'moreScripts' /}        
     </body>
 </html>
