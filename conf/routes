@@ -1,6 +1,36 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
+
+
+GET     /adm/onibus/lista                                                                               OnibusController.list
+GET     /adm/onibus                                                                                     OnibusController.blank
+POST    /adm/onibus                                                                                     OnibusController.create
+GET     /adm/onibus/{id}                                                                                OnibusController.show
+POST    /adm/onibus/{id}                                                                                OnibusController.save
+DELETE  /adm/onibus/{id}                                                                                OnibusController.delete
+
+# Secure Routes
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GET     /                                                                                               Secure.login
+GET     /login                                                                                          Secure.login
+GET     /logout                                                                                         security.SecureController.logout
+POST    /login                                                                                          security.SecureController.authenticate
+GET     /access/denied                                                                                  security.SecurityController.onCheckFailed
+
+# Admin Routes
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GET     /adm                                                                                            admin.HomeAdminController.index
+GET     /adm/home                                                                                       admin.HomeAdminController.index
+
+GET     /adm/change/password                                                                            admin.UserChangePwdController.showPassword
+POST    /adm/change/password                                                                            admin.UserChangePwdController.savePassword
+
+GET     /adm/config/system/parameters                                                                   admin.SystemParameterController.list
+GET     /adm/config/system/parameter/{id}                                                               admin.SystemParameterController.show
+POST    /adm/config/system/parameter/{id}                                                               admin.SystemParameterController.save
+
+
 # Home page
 GET     /                                       Application.index
 

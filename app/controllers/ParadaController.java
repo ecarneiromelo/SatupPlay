@@ -1,4 +1,4 @@
-package controllers.admin;
+package controllers;
 
 import controllers.CRUD.For;
 import controllers.base.BaseCRUDController;

@@ -1,2 +1,32 @@
 #{extends '_layout/layout.html' /}
-        #{doLayout /}
+<!-- Wrapper -->
+    <div class="wrapper">
+	    <div class="navigation">
+	        <div class="container">
+	            <header class="navbar" id="top" role="banner">
+	                <div class="navbar-header">
+	                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+	                        <span class="sr-only">Toggle navigation</span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                    </button>
+	                    <div class="navbar-brand nav" id="brand">
+	                        <a href="#">&{'menu.satup'}</a>
+	                    </div>
+	                </div>
+	                <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+	                    <ul class="nav navbar-nav">
+	                        <li><a href="#">&{'menu.inital.page'}</a></li>
+	                        <li><a href="#">&{'menu.position'}</a></li>
+	                        <li><a href="#">&{'menu.line'}</a></li>
+	                        <li><a href="#">&{'menu.login'}</a></li>
+	                        <li><a href="#">&{'menu.contact'}</a></li>
+	                    </ul>
+	                </nav><!-- /.navbar collapse-->
+	            </header><!-- /.navbar -->
+	        </div><!-- /.container -->
+	    </div><!-- /.navigation -->
+    #{doLayout /}
+</div>
+        
