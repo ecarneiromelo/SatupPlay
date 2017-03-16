@@ -20,7 +20,16 @@
 	                        <li><a href="#">&{'menu.inital.page'}</a></li>
 	                        <li><a href="#">&{'menu.position'}</a></li>
 	                        <li><a href="#">&{'menu.line'}</a></li>
-	                        <li><a href="#">&{'menu.login'}</a></li>
+	                          #{if connectedUser}
+	                            <li><a href="@admin.controller.admin.">&{'menu.onibus'}</a></li>
+		                        <li><a href="#">&{'menu.linha'}</a></li>
+		                        <li><a href="#">&{'menu.parada'}</a></li>
+		                        <li><a href="#">&{'menu.user'}</a></li>
+		                        <li><a href="#">&{'menu.logout'}</a></li>
+	                          #{/if}
+	                          #{else}
+	                            <li><a href="#">&{'menu.login'}</a></li>
+	                          #{/else}
 	                        <li><a href="#">&{'menu.contact'}</a></li>
 	                    </ul>
 	                </nav><!-- /.navbar collapse-->

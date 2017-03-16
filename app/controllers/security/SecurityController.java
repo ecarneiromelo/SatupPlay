@@ -4,6 +4,8 @@ import static common.constants.ControllerConstants.REFERER;
 import static common.constants.MessageConstants.MESSAGE_ERROR_SECURE_ACCESS_DENIED;
 import static common.constants.MessageConstants.MESSAGE_SUCCESS_OPERATION;
 
+import java.security.NoSuchAlgorithmException;
+
 import common.constants.DomainConstants.UserStatus;
 import common.encrypt.EncryptProvider;
 import common.exceptions.SystemException;
@@ -11,7 +13,6 @@ import common.utils.BinaryUtil;
 import common.utils.StringUtil;
 import controllers.Secure;
 import controllers.admin.HomeAdminController;
-import models.MenuBO;
 import models.UserBO;
 import play.Logger;
 import play.i18n.Messages;
@@ -24,15 +25,14 @@ public class SecurityController extends Secure.Security {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Public static methods
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public static boolean authenticate(final String username, final String password) throws SystemException {
+    public static boolean authenticate(final String username, final String password) throws SystemException, NoSuchAlgorithmException {
         boolean authenticated = false;
         final UserBO user = UserBO.findByEmail(username);
         if (user == null || user.getStatus() == UserStatus.BLOCKED) {
             return false;
         }
-        final byte[] byteFromHex = BinaryUtil.hex2byte(user.getPass());
-        final String result = EncryptProvider.decryptAESWithHmac256(new String(byteFromHex), password);
-        if (user.getId().toString().equals(result)) {
+        final String result = EncryptProvider.encryptMD5(password);
+        if (user.getPass().toString().equals(result)) {
             authenticated = true;
         }
         authenticated = checkAttempts(username, authenticated);
@@ -47,8 +47,6 @@ public class SecurityController extends Secure.Security {
             if (user == null) {
                 return false;
             }
-            final Long count = MenuBO.countMenuByUrlAndRoleId(link, user.getRole().getId());
-            return count > 0;
         }
         return false;
     }

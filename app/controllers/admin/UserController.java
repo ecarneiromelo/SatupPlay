@@ -1,5 +1,6 @@
-package controllers;
+package controllers.admin;
 
+import controllers.CRUD;
 import controllers.CRUD.For;
 import controllers.base.BaseCRUDController;
 import models.UserBO;

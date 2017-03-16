@@ -2,14 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-
-GET     /adm/onibus/lista                                                                               OnibusController.list
-GET     /adm/onibus                                                                                     OnibusController.blank
-POST    /adm/onibus                                                                                     OnibusController.create
-GET     /adm/onibus/{id}                                                                                OnibusController.show
-POST    /adm/onibus/{id}                                                                                OnibusController.save
-DELETE  /adm/onibus/{id}                                                                                OnibusController.delete
-
 # Secure Routes
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 GET     /                                                                                               Secure.login
@@ -29,6 +21,14 @@ POST    /adm/change/password                                                    
 GET     /adm/config/system/parameters                                                                   admin.SystemParameterController.list
 GET     /adm/config/system/parameter/{id}                                                               admin.SystemParameterController.show
 POST    /adm/config/system/parameter/{id}                                                               admin.SystemParameterController.save
+
+
+GET     /adm/onibus/listar                                                                              admin.OnibusController.list
+GET     /adm/onibus                                                                                     admin.OnibusController.blank
+POST    /adm/onibus                                                                                     admin.OnibusController.create
+GET     /adm/onibus/{id}                                                                                admin.OnibusController.show
+POST    /adm/onibus/{id}                                                                                admin.OnibusController.save
+DELETE  /adm/onibus/{id}                                                                                admin.OnibusController.delete
 
 
 # Home page

@@ -67,13 +67,7 @@ public class UserBO extends BaseModel {
     @NoBinding
     @Column(name = "LOGIN_ATTEMPTS", columnDefinition = "numeric(2,0)")
     private Short loginAttempts = 0;
-    // bi-directional many-to-one association to UserGroupBO
-    // bi-directional many-to-one association to RoleBO
-    @NoBinding
-    @ManyToOne
-    @JoinColumn(name = "id_dmn_role")
-    private RoleBO role;
-
+ 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constructors.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,11 +90,8 @@ public class UserBO extends BaseModel {
         if (authenticated) {
             this.setLoginAttempts((short) 0);
         } else {
-            final SystemParameterBO param = (SystemParameterBO) SystemParameterBO.findById(MAX_LOGIN_ATTEMPTS);
-            if (common.utils.StringUtil.isEmpty(param.getValue())) {
-                return;
-            }
-            final Short attemptNumberParam = Short.valueOf(param.getValue());
+            
+            final Long attemptNumberParam = MAX_LOGIN_ATTEMPTS;
             if (attemptNumberParam <= 0) {
                 return;
             }
@@ -163,12 +154,6 @@ public class UserBO extends BaseModel {
     }
     public void setCheckPass(final String checkPass) {
         this.checkPass = checkPass;
-    }
-    public RoleBO getRole() {
-        return this.role;
-    }
-    public void setRole(final RoleBO role) {
-        this.role = role;
     }
     public boolean checkPasswords() {
         return this.pass.equals(this.checkPass);
