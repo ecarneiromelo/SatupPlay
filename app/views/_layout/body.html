@@ -1,41 +1,43 @@
 #{extends '_layout/layout.html' /}
-<!-- Wrapper -->
-    <div class="wrapper">
-	    <div class="navigation">
-	        <div class="container">
-	            <header class="navbar" id="top" role="banner">
-	                <div class="navbar-header">
-	                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-	                        <span class="sr-only">Toggle navigation</span>
-	                        <span class="icon-bar"></span>
-	                        <span class="icon-bar"></span>
-	                        <span class="icon-bar"></span>
-	                    </button>
-	                    <div class="navbar-brand nav" id="brand">
-	                        <a href="#">&{'menu.satup'}</a>
-	                    </div>
-	                </div>
-	                <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
-	                    <ul class="nav navbar-nav">
-	                        <li><a href="#">&{'menu.inital.page'}</a></li>
-	                        <li><a href="#">&{'menu.position'}</a></li>
-	                        <li><a href="#">&{'menu.line'}</a></li>
-	                          #{if connectedUser}
-	                            <li><a href="@admin.controller.admin.">&{'menu.onibus'}</a></li>
-		                        <li><a href="#">&{'menu.linha'}</a></li>
-		                        <li><a href="#">&{'menu.parada'}</a></li>
-		                        <li><a href="#">&{'menu.user'}</a></li>
-		                        <li><a href="#">&{'menu.logout'}</a></li>
-	                          #{/if}
-	                          #{else}
-	                            <li><a href="#">&{'menu.login'}</a></li>
-	                          #{/else}
-	                        <li><a href="#">&{'menu.contact'}</a></li>
-	                    </ul>
-	                </nav><!-- /.navbar collapse-->
-	            </header><!-- /.navbar -->
-	        </div><!-- /.container -->
-	    </div><!-- /.navigation -->
-    #{doLayout /}
+
+<div class="wrapper">
+    <div class="navigation">
+        <div class="container">
+            <header class="navbar" id="top" role="banner">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-brand nav" id="brand">
+                        <a href="#">&{'menu.satup'}</a>
+                    </div>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li><a href="@{admin.HomeAdminController.index}">&{'menu.position'}</a></li>
+                        <li><a href="@{admin.HomeAdminController.index}">&{'menu.line'}</a></li>
+                          #{if connectedUser}
+                            <li><a href="@{admin.Onibuscontroller.list}">&{'menu.onibus'}</a></li>
+	                        <li><a href="@{admin.LinhaController.list}">&{'menu.linha'}</a></li>
+	                        <li><a href="@{admin.ParadaController.list}">&{'menu.parada'}</a></li>
+	                        <li><a href="@{admin.UserController.list}">&{'menu.user'}</a></li>
+	                        <li><a href="@{security.SecureController.logout}">&{'menu.logout'}</a></li>
+                          #{/if}
+                          #{else}
+                            <li><a href="@{admin.HomeAdminController.index}">&{'menu.login'}</a></li>
+                          #{/else}
+                    </ul>
+                </nav><!-- /.navbar collapse-->
+            </header><!-- /.navbar -->
+        </div><!-- /.container -->
+    </div><!-- /.navigation -->
+    <div id="page-content">
+    	<div class="container"> 
+			#{doLayout /}
+		</div>
+	</div>
 </div>
         

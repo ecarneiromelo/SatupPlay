@@ -1,6 +1,5 @@
 package controllers.admin;
 
-import controllers.CRUD;
 import controllers.CRUD.For;
 import models.OnibusBO;
 import models.base.BaseAdminController;

@@ -1,0 +1,14 @@
+#{extends 'CRUD/layout.html' /}
+#{set allowInsert:"${!blockInsert}" /}
+#{set allowUpdate:"${!blockUpdate}" /}
+#{set allowDelete:"${!blockDelete}" /}
+
+<h2>&{'crud.show.title', type.modelName}</h2>
+<div class="step">
+    <div id="middle-wizard">
+        #{form action:@save(object._key()), enctype:'multipart/form-data'}
+            #{crud.form /}
+            #{system.addCrudButtons /}
+        #{/form}
+    </div>
+</div>

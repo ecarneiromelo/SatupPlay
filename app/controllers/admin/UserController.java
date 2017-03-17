@@ -1,11 +1,10 @@
 package controllers.admin;
 
-import controllers.CRUD;
 import controllers.CRUD.For;
-import controllers.base.BaseCRUDController;
 import models.UserBO;
+import models.base.BaseAdminController;
 
 @For(UserBO.class)
-public class UserController extends BaseCRUDController {
+public class UserController extends BaseAdminController {
 
 }

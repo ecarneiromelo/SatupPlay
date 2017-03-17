@@ -5,13 +5,13 @@
          <header><h1>&{'login.sign'}</h1></header>      
          #{form @security.SecureController.authenticate(), id:'loginForm'}  
              #{field 'username'}
-                 <div class="form-group ${flash.error ? 'has-error' : ''}">
+                 <div class="form-group ">
                      <input type="text" class=" form-control " id="${field.id}" name=${field.name} placeholder="&{'secure.username'}">
                      <span class="input-icon"><i class=" icon-user"></i></span>
                  </div>
              #{/field}   
              #{field 'password'}
-                 <div class="form-group ${flash.error ? 'has-error' : ''}" style="margin-bottom:5px;">
+                 <div class="form-group " style="margin-bottom:5px;">
                      <input type="password" class=" form-control" id="${field.id}" name=${field.name} placeholder="&{'secure.passwd'}" style="margin-bottom:5px;">
                      <span class="input-icon"><i class="icon-lock"></i></span>
                  </div>

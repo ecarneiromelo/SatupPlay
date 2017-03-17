@@ -7,7 +7,14 @@
 <div class="step">
     <div id="middle-wizard">
         #{crud.search /}
-        #{crud.table fields:['name', 'email'] /}
-        #{crud.pagination /}
+        #{crud.table fields:['name','email']}
+            #{crud.custom 'name'}
+                   ${object.name}
+            #{/crud.custom }
+            #{crud.custom 'email'}
+                ${object.email}
+            #{/crud.custom}
+        #{/crud.table}
+       
     </div>
 </div>

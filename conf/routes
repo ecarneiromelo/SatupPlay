@@ -30,6 +30,20 @@ GET     /adm/onibus/{id}                                                        
 POST    /adm/onibus/{id}                                                                                admin.OnibusController.save
 DELETE  /adm/onibus/{id}                                                                                admin.OnibusController.delete
 
+GET     /adm/paradas	                                                                                admin.ParadaController.list
+GET     /adm/parada                                                                                     admin.ParadaController.blank
+POST    /adm/parada                                                                                     admin.ParadaController.create
+GET     /adm/parada/{id}                                                                                admin.ParadaController.show
+POST    /adm/parada/{id}                                                                                admin.ParadaController.save
+DELETE  /adm/parada/{id}                                                                                admin.ParadaController.delete
+
+GET     /adm/linhas                                                                                     admin.LinhaController.list
+GET     /adm/linha                                                                                      admin.LinhaController.blank
+POST    /adm/linha                                                                                      admin.LinhaController.create
+GET     /adm/linha/{id}                                                                                 admin.LinhaController.show
+POST    /adm/linha/{id}                                                                                 admin.LinhaController.save
+DELETE  /adm/linha/{id}                                                                                 admin.LinhaController.delete
+
 
 # Home page
 GET     /                                       Application.index
