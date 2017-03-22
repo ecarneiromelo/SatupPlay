@@ -1,6 +1,8 @@
 package models;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 import controllers.CRUD;
@@ -27,6 +29,9 @@ public class LinhaBO extends Model  {
 
 	@Column(name="ds_valor")
 	private double dsValor;
+
+	@OneToMany(mappedBy ="tbLinha")
+	private List<OnibusBO> tbOnibus;
 
 	public LinhaBO() {
 	}
@@ -69,6 +74,14 @@ public class LinhaBO extends Model  {
 
 	public void setDsValor(double dsValor) {
 		this.dsValor = dsValor;
+	}
+
+	public List<OnibusBO> getTbOnibus() {
+		return tbOnibus;
+	}
+
+	public void setTbOnibus(List<OnibusBO> tbOnibus) {
+		this.tbOnibus = tbOnibus;
 	}
 
 }
