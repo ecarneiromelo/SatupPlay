@@ -27,23 +27,14 @@ CREATE SEQUENCE  SQ_TB_USER INCREMENT 1 MINVALUE 0 MAXVALUE 9223372036854775807 
 );
 
 --------------------------------------------------------
---  DDL FOR INDEX SATUP_RL_ONIBUS_PRODUTO_PK
---------------------------------------------------------
-
-  CREATE TABLE RL_ONIBUS_LINHA (
-    ID_ONIBUS BIGINT  NOT NULL,
-    ID_LINHA BIGINT  NOT NULL,
-    CONSTRAINT RL_ONIBUS_PRODUTO_PKEY PRIMARY KEY (ID_ONIBUS, ID_LINHA)
-);
-
---------------------------------------------------------
 --  DDL FOR TABLE TB_ONIBUS
 --------------------------------------------------------
 
 CREATE TABLE TB_ONIBUS(
 	ID BIGINT PRIMARY KEY,
 	DS_NUMERO VARCHAR(16) NOT NULL,
-	DS_PLACA VARCHAR(8) NOT NULL
+	DS_PLACA VARCHAR(8) NOT NULL,
+    ID_LINHA BIGINT
 );
 
 --------------------------------------------------------
@@ -104,38 +95,11 @@ CREATE TABLE TB_SYSTEM_PARAMETER (
 );
 
 --------------------------------------------------------
--- ADD TABLE "TB_DMN_MENU"                            
---------------------------------------------------------
-
-CREATE TABLE TB_DMN_MENU (
-    ID BIGINT  NOT NULL,
-    ID_PARENT_MENU BIGINT,
-    TAG_NAME CHARACTER VARYING(200)  NOT NULL,
-    TAG_DESCRIPTION CHARACTER VARYING(200),
-    MENU_ORDER SMALLINT  NOT NULL,
-    URL CHARACTER VARYING(256)  NOT NULL,
-    CONSTRAINT TB_DMN_MENU_PKEY PRIMARY KEY (ID)
-);
-
-
---------------------------------------------------------
--- ADD TABLE "RL_ROLE_MENU"                           
---------------------------------------------------------
-
-CREATE TABLE RL_ROLE_MENU (
-    ID_ROLE BIGINT  NOT NULL,
-    ID_MENU BIGINT  NOT NULL,
-    CONSTRAINT RL_ROLE_MENU_PKEY PRIMARY KEY (ID_ROLE, ID_MENU)
-);
- 
---------------------------------------------------------
 -- ADD TABLE "TB_USER"                                
 --------------------------------------------------------
 
 CREATE TABLE TB_USER (
     ID BIGINT DEFAULT NEXTVAL('SQ_TB_USER')  NOT NULL,
-    ID_USER_GROUP BIGINT,
-    ID_DMN_ROLE BIGINT  NOT NULL,
     EMAIL CHARACTER VARYING(150)  NOT NULL,
     NAME CHARACTER VARYING(150)  NOT NULL,
     PASS CHARACTER VARYING(256)  NOT NULL,
