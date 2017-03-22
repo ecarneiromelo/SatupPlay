@@ -1,6 +1,50 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
+
+# Secure Routes
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GET     /                                                                                               Secure.login
+GET     /login                                                                                          Secure.login
+GET     /logout                                                                                         security.SecureController.logout
+POST    /login                                                                                          security.SecureController.authenticate
+GET     /access/denied                                                                                  security.SecurityController.onCheckFailed
+
+# Admin Routes
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GET     /adm                                                                                            admin.HomeAdminController.index
+GET     /adm/home                                                                                       admin.HomeAdminController.index
+
+GET     /adm/change/password                                                                            admin.UserChangePwdController.showPassword
+POST    /adm/change/password                                                                            admin.UserChangePwdController.savePassword
+
+GET     /adm/config/system/parameters                                                                   admin.SystemParameterController.list
+GET     /adm/config/system/parameter/{id}                                                               admin.SystemParameterController.show
+POST    /adm/config/system/parameter/{id}                                                               admin.SystemParameterController.save
+
+
+GET     /adm/onibus/listar                                                                              admin.OnibusController.list
+GET     /adm/onibus                                                                                     admin.OnibusController.blank
+POST    /adm/onibus                                                                                     admin.OnibusController.create
+GET     /adm/onibus/{id}                                                                                admin.OnibusController.show
+POST    /adm/onibus/{id}                                                                                admin.OnibusController.save
+DELETE  /adm/onibus/{id}                                                                                admin.OnibusController.delete
+
+GET     /adm/paradas	                                                                                admin.ParadaController.list
+GET     /adm/parada                                                                                     admin.ParadaController.blank
+POST    /adm/parada                                                                                     admin.ParadaController.create
+GET     /adm/parada/{id}                                                                                admin.ParadaController.show
+POST    /adm/parada/{id}                                                                                admin.ParadaController.save
+DELETE  /adm/parada/{id}                                                                                admin.ParadaController.delete
+
+GET     /adm/linhas                                                                                     admin.LinhaController.list
+GET     /adm/linha                                                                                      admin.LinhaController.blank
+POST    /adm/linha                                                                                      admin.LinhaController.create
+GET     /adm/linha/{id}                                                                                 admin.LinhaController.show
+POST    /adm/linha/{id}                                                                                 admin.LinhaController.save
+DELETE  /adm/linha/{id}                                                                                 admin.LinhaController.delete
+
+
 # Home page
 GET     /                                       Application.index
 

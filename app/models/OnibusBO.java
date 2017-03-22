@@ -4,36 +4,46 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import play.db.jpa.Model;
-
+import models.base.BaseModel;
 
 /**
  * The persistent class for the tb_onibus database table.
  * 
  */
 @Entity
-@Table(name="tb_onibus")
-public class OnibusBO extends Model {
+@Table(name = "tb_onibus")
+public class OnibusBO extends BaseModel {
 
+	@Id
+	@GeneratedValue
+	private Long id;
 
-	@Column(name="ds_numero")
+	@Column(name = "ds_numero")
 	private String dsNumero;
 
-	@Column(name="ds_placa")
+	@Column(name = "ds_placa")
 	private String dsPlaca;
 
-	//bi-directional many-to-one association to TbLocalizacao
-	@OneToMany(mappedBy="tbOnibus")
+	// bi-directional many-to-one association to TbLocalizacao
+	@OneToMany(mappedBy = "tbOnibus")
 	private List<LocalizacaoBO> tbLocalizacaos;
 
+	@ManyToOne
+	@JoinColumn(name="id_linha")
+	private LinhaBO tbLinha;
+	
 	public OnibusBO() {
 	}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {

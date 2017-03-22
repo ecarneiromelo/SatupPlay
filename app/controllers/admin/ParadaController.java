@@ -1,10 +1,10 @@
 package controllers.admin;
 
 import controllers.CRUD.For;
-import controllers.base.BaseCRUDController;
 import models.ParadaBO;
+import models.base.BaseAdminController;
 
 @For(ParadaBO.class)
-public class ParadaController extends BaseCRUDController {
+public class ParadaController extends BaseAdminController {
 
 }

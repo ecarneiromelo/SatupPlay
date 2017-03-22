@@ -1,3 +1,47 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
-#
+
+#Menu
+menu.satup=satup
+satup=Satup
+menu.position=Posição
+menu.line=Informação Linha
+menu.onibus=Onibus
+menu.linha=Linha
+menu.parada=Parada
+menu.user=Usuário
+menu.logout=Logout
+
+
+#object
+object.dsNome=Nome
+object.dsNumero=Numero
+object.dsPosicao=Posição
+object.dsPlaca=Placa
+object.tbLinha=Linha
+object.dsValor=Valor
+object.dsLinha=Linha
+object.name=Nome
+object.email=E-mail
+object.pass=Senha
+
+#Parada
+Add=Adicionar
+ParadaBO=Parada
+Add Parada=Adicionar Parada
+ParadaController=Parada
+
+#Onibus
+OnibusController=Onibus
+OnibusBO=Onibus
+
+#Linha
+LinhaController=Linha
+
+#User
+UserController=Usuário
+UserBO=Usuário
+
+#Other
+search=Procurar
+select.value.linha=Selecione uma Linha

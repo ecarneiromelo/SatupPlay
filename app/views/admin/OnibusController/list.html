@@ -1,0 +1,22 @@
+#{extends 'CRUD/layout.html' /}
+#{set allowInsert:"${!blockInsert}" /}
+#{set allowUpdate:"${!blockUpdate}" /}
+#{set allowDelete:"${!blockDelete}" /}
+
+<h2>&{'crud.list.title', type.name}</h2>
+<div class="step">
+    <div id="middle-wizard">
+       #{crud.search /}
+       #{crud.table fields:['dsPlaca','dsNumero']}
+            #{crud.custom 'dsPlaca'}
+                   ${object.dsPlaca}
+            #{/crud.custom }
+            #{crud.custom 'dsNumero'}
+                ${object.dsNumero}
+            #{/crud.custom}
+        #{/crud.table}
+    </div>
+</div>
+       
+    </div>
+</div>

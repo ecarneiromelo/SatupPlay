@@ -1,14 +1,14 @@
 #{extends '_layout/body.html' /}
 
-<div class="row">
-   <div class="col-md-12">
+<div class="row">   <div class="col-md-12">
+
       <!-- Headings & Paragraph Copy -->             
         <h2>&{'welcome'}</h2>
         <br/>
         <p>
             <span lang="pt-br">${connectedUser}</span>
         </p>
-        #{if connectedUser.userGroup}
+        #{if connectedUser}
             <p>&{'client.user.info.home.page'}</p>
             <div class="import-file-info">
                 &{'import.file.info'}

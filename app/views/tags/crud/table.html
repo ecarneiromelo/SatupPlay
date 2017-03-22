@@ -19,14 +19,16 @@
 <div id="crudTable_id" class="row">
     <div class="col-md-12 ${_caller.objects ? '' : 'add_bottom_30'}">
         #{if _caller.objects}
-            <div class="table-responsive">
-                 <table class="table dataTable">
-                    <thead class="white-space-nowrap">
+           <section id="submit" class="submit">
+               <section id="select-package">
+                   <div class="table-responsive submit-pricing">
+                       <table class="table">
+                           <thead>
                         <tr>
                         %{ if(_fields) { }%
                             %{ _fields.eachWithIndex() { field, i -> }%
                                 %{ if(!_sort || _sort.contains(field)) { }%
-                                    <th onclick="location.href='${url.remove('page').add('search', params.search).add('orderBy', field).add('order', (_caller.orderBy == field && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}'">
+                                    <th class="title" onclick="location.href='${url.remove('page').add('search', params.search).add('orderBy', field).add('order', (_caller.orderBy == field && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}'">
                                         &{'object.' + field}
                                         <span class="${_caller.orderBy == field ? (_caller.order == 'DESC' ? 'sorting_desc' : 'sorting_asc') : 'sorting'}"></span>
                                     </th>
@@ -101,8 +103,12 @@
                             %{ } }%
                         </tr>
                         %{ } }%
-                    </tbody>
-                </table>
+                   </tbody>
+                  </table>
+              </div>
+          </section>
+      </section>
+
             </div>
         #{/if}
     </div>

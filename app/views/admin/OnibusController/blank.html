@@ -1,0 +1,32 @@
+#{extends 'CRUD/layout.html' /}
+#{set allowInsert:"${!blockInsert}" /}
+#{set allowUpdate:"${!blockUpdate}" /}
+#{set allowDelete:"${!blockDelete}" /}
+
+<h2>&{'crud.blank.title', type.modelName}</h2>
+<div class="step">
+    <div id="middle-wizard">
+        #{form action:@create(), enctype:'multipart/form-data'}
+            #{crud.form}
+            	#{crud.custom 'tbLinha'}
+                    #{field 'object.tbLinha'}
+                    <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
+                        <div class="styled-select">
+                            #{select field.name, value: field.value, id:field.id, class:'form-control fill-tooltip-grow', alt: play.i18n.Messages.get(field.name), title: play.i18n.Messages.get(field.name)}                    
+                                <option value="">&{'select.value.linha'}</option>     
+                                #{list items:models.LinhaBO.findAll(), as:'linha'}                                                                                             
+                                    <option name="${linha.dsNome}"}" value="${linha.id}" ${linha.equals(field.value) ? 'selected="true"'.raw() : ''}>&{linha.dsNome}</option>
+                                #{/list}  
+                            #{/select}                
+                            #{ifError field.name}
+                                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+                            #{/ifError}
+                        </div>
+                    </div>
+                    #{/field}
+                #{/crud.custom}
+            #{/crud.form}
+            #{system.addCrudButtons /}
+        #{/form}
+    </div>
+</div>
