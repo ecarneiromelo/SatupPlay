@@ -11,11 +11,12 @@ menu.linha=Linha
 menu.parada=Parada
 menu.user=Usuário
 menu.logout=Logout
+menu.login=Login
 
 
 #object
 object.dsNome=Nome
-object.dsNumero=Numero
+object.dsNumero=Número
 object.dsPosicao=Posição
 object.dsPlaca=Placa
 object.tbLinha=Linha
@@ -24,6 +25,7 @@ object.dsLinha=Linha
 object.name=Nome
 object.email=E-mail
 object.pass=Senha
+object.dsSentido=Sentido Contrário
 
 #Parada
 Add=Adicionar
@@ -37,6 +39,7 @@ OnibusBO=Onibus
 
 #Linha
 LinhaController=Linha
+LinhaBO=Linha
 
 #User
 UserController=Usuário
@@ -45,3 +48,22 @@ UserBO=Usuário
 #Other
 search=Procurar
 select.value.linha=Selecione uma Linha
+Save=Salva
+Cancel=Cancelar
+
+#CRUD
+
+crud.title=Administrador
+crud.home=Home
+crud.blank=Novo
+crud.index.add=Adicionar
+crud.add=Adicionar &{%s}
+crud.list.title=&{%s}
+crud.list.size=%d &{%s}
+crud.list.totalSize=%d total
+crud.pagination.previous=« Previous
+crud.pagination.next=Next »
+crud.pagination.last=Last »»
+crud.pagination.first=«« First
+crud.show.title=Editar &{%s}
+crud.save=Salvar
