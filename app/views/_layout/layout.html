@@ -16,16 +16,15 @@
 	      #{get 'moreStyles' /}
 	   <title>Satup</title>
   </head>
-   <body class="page-homepage map-google horizontal-search-float" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
-       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c&sensor=false"
+   <body class="page-homepage map-google" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
+       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c"
       type="text/javascript"></script>
         #{doLayout /}
         <script type="text/javascript" src="@{'/public/assets/js/jquery-2.1.0.min.js'}"></script>
+       	<script type="text/javascript" src="@{'/public/assets/js/locations.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/jquery-migrate-1.2.1.min.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/bootstrap/js/bootstrap.min.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/smoothscroll.js'}"></script>
-		<script type="text/javascript" src="@{'/public/assets/js/markerwithlabel_packed.js'}"></script>
-		<script type="text/javascript" src="@{'/public/assets/js/infobox.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/owl.carousel.min.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/bootstrap-select.min.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/jquery.validate.min.js'}"></script>
@@ -49,28 +48,10 @@
 		    
 	    </style>
 	    <script>
-          function initMap() {
-            var myLatLng = {lat: -25.363, lng: 131.044};
-    
-            // Create a map object and specify the DOM element for display.
-            var map = new google.maps.Map(document.getElementById('map'), {
-              center: myLatLng,
-              scrollwheel: false,
-              zoom: 9
-            });
-    
-            // Create a marker and set its position.
-            var marker = new google.maps.Marker({
-              map: map,
-              position: myLatLng,
-              title: 'Hello World!'
-            });
-          }
-        </script>
-        <style type="text/css">
-          html, body { height: 100%; margin: 0; padding: 0; }
-          #map { height: 100%; }
-        </style>
+		    _latitude = 48,87; // Estas duas linhas representam o centro de seu mapa 
+	        _longitude = 2,29; // Estas duas linhas representam o centro de seu mapa 
+	        createHomepageGoogleMap (_latitude, _longitude); 
+	    </script>
         #{get 'moreScripts' /}        
     </body>
 </html>
