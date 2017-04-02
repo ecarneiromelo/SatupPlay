@@ -16,12 +16,11 @@
 	      #{get 'moreStyles' /}
 	   <title>Satup</title>
   </head>
-   <body class="page-homepage map-google" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
-       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c"
+   <body class="page-homepage" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
+       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c&callback=initMap"
       type="text/javascript"></script>
         #{doLayout /}
         <script type="text/javascript" src="@{'/public/assets/js/jquery-2.1.0.min.js'}"></script>
-       	<script type="text/javascript" src="@{'/public/assets/js/locations.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/jquery-migrate-1.2.1.min.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/bootstrap/js/bootstrap.min.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/smoothscroll.js'}"></script>
@@ -38,20 +37,60 @@
 		<script type="text/javascript" src="@{'/public/assets/js/jquery.dependClass-0.1.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/draggable-0.1.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/jquery.slider.js'}"></script>
-		<script type="text/javascript" src="@{'/public/assets/js/markerclusterer_packed.js'}"></script>
-		<script type="text/javascript" src="@{'/public/assets/js/custom-map.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/custom.js'}"></script>
 		<!--[if gt IE 8]>
 		<script type="text/javascript" src="@{'/public/assets/js/ie.js'}"></script>
 		<![endif]-->
-		<style type="text/css">
-		    
-	    </style>
-	    <script>
-		    _latitude = 48,87; // Estas duas linhas representam o centro de seu mapa 
-	        _longitude = 2,29; // Estas duas linhas representam o centro de seu mapa 
-	        createHomepageGoogleMap (_latitude, _longitude); 
-	    </script>
+		
+	<script>
+	var x=document.getElementById("demo");
+	function getLocation()
+	  {
+	  if (navigator.geolocation)
+	    {
+	    navigator.geolocation.getCurrentPosition(showPosition,showError);
+	    }
+	  else{x.innerHTML="Geolocalização não é suportada nesse browser.";}
+	  }
+	 
+	function showPosition(position)
+	  {
+	  lat=position.coords.latitude;
+	  lon=position.coords.longitude;
+	  latlon=new google.maps.LatLng(lat, lon)
+	  mapholder=document.getElementById('map')
+	  mapholder.style.height='250px';
+	  mapholder.style.width='500px';
+	 
+	  var myOptions={
+	  center:latlon,zoom:14,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP,
+	  mapTypeControl:false,
+	  navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+	  };
+	  var map=new google.maps.Map(document.getElementById("map"),myOptions);
+	  var marker=new google.maps.Marker({position:latlon,map:map,title:"Você está Aqui!"});
+	  }
+	 
+	function showError(error)
+	  {
+	  switch(error.code)
+	    {
+	    case error.PERMISSION_DENIED:
+	      x.innerHTML="Usuário rejeitou a solicitação de Geolocalização."
+	      break;
+	    case error.POSITION_UNAVAILABLE:
+	      x.innerHTML="Localização indisponível."
+	      break;
+	    case error.TIMEOUT:
+	      x.innerHTML="O tempo da requisição expirou."
+	      break;
+	    case error.UNKNOWN_ERROR:
+	      x.innerHTML="Algum erro desconhecido aconteceu."
+	      break;
+	    }
+	  }
+	</script>
         #{get 'moreScripts' /}        
     </body>
 </html>
