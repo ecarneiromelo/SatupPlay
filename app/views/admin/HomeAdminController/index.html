@@ -2,30 +2,26 @@
 
 <div class="row">   <div class="col-md-12">
 
-      <!-- Headings & Paragraph Copy -->             
-        <h2>&{'welcome'}</h2>
-        <br/>
-        <p>
-            <span lang="pt-br">${connectedUser}</span>
-        </p>
-        #{if connectedUser}
-            <p>&{'client.user.info.home.page'}</p>
-            <div class="import-file-info">
-                &{'import.file.info'}
-                <span style="display: block; width: 100%; text-align: right;">
-                    <a href="#" download>&{'get.sampla.upload.file'}</a>
-                </span>
-            </div>
-        #{/if}
-        #{else}
-            <p>&{'satup.user.info.home.page'}</p>
-        #{/else}
-        <div id="map"></div>
-        
-        <p id="demo">Clique no botão para obter sua localização:</p>
-	<button onclick="getLocation()">Clique aqui</button>
-	<div id="mapholder"></div>
-   </div>
+  <!-- Headings & Paragraph Copy -->             
+    <h2>&{'welcome'}</h2>
+    <br/>
+    <p>
+        <span lang="pt-br">${connectedUser}</span>
+    </p>
+    #{if connectedUser}
+        <p>&{'client.user.info.home.page'}</p>
+        <div class="import-file-info">
+            &{'import.file.info'}
+            <span style="display: block; width: 100%; text-align: right;">
+                <a href="#" download>&{'get.sampla.upload.file'}</a>
+            </span>
+        </div>
+    #{/if}
+    #{else}
+        <p>&{'satup.user.info.home.page'}</p>
+    #{/else}
+    <button onclick="getLocation()">Clique aqui</button>
+    <div id="map" class="col-md-12"></div>
    <!-- End col-md-12-->
 </div>
 <!-- End row-->
