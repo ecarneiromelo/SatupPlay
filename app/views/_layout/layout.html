@@ -17,7 +17,7 @@
 	   <title>Satup</title>
   </head>
    <body class="page-homepage" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
-       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c&callback=initMap"
+       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c"
       type="text/javascript"></script>
         #{doLayout /}
         <script type="text/javascript" src="@{'/public/assets/js/jquery-2.1.0.min.js'}"></script>
@@ -59,7 +59,7 @@
 	  lon=position.coords.longitude;
 	  latlon=new google.maps.LatLng(lat, lon)
 	  mapholder=document.getElementById('map')
-	  mapholder.style.height='auto';
+	  mapholder.style.height='550px';
 	  mapholder.style.width='100%';
 	 
 	  var myOptions={
