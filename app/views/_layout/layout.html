@@ -17,7 +17,7 @@
 	   <title>Satup</title>
   </head>
    <body class="page-homepage" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
-       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c"
+       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c&callback=initMap"
       type="text/javascript"></script>
         #{doLayout /}
         <script type="text/javascript" src="@{'/public/assets/js/jquery-2.1.0.min.js'}"></script>
@@ -43,6 +43,25 @@
 		<![endif]-->
 		
 	<script>
+	function initMap() {
+		  var myLatLng = {lat: -15.792982, lng: -47.886226};
+
+		  var map = new google.maps.Map(document.getElementById('map'), {
+		    zoom: 15,
+		    center: myLatLng
+		  });
+
+		  var marker = new google.maps.Marker({
+		    position: myLatLng,
+		    map: map,
+		    title: 'Hello World!'
+		  });
+		  $(function(){
+				google.maps.event.addListener(map, 'click', function(event) {
+				    alert(event.latLng);  // in event.latLng  you have the coordinates of click
+				});
+			});
+		}
 	var x=document.getElementById("demo");
 	function getLocation()
 	  {
