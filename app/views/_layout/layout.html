@@ -17,8 +17,7 @@
 	   <title>Satup</title>
   </head>
    <body class="page-homepage" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
-       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c&callback=initMap"
-      type="text/javascript"></script>
+       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEfCk5FZCAIAiT1Nqae7hmydK5ne2KM8c&callback=initMap"  async defer type="text/javascript"></script>
         #{doLayout /}
         <script type="text/javascript" src="@{'/public/assets/js/jquery-2.1.0.min.js'}"></script>
 		<script type="text/javascript" src="@{'/public/assets/js/jquery-migrate-1.2.1.min.js'}"></script>
@@ -43,72 +42,6 @@
 		<![endif]-->
 		
 	<script>
-	function initMap() {
-		  var myLatLng = {lat: -15.792982, lng: -47.886226};
-
-		  var map = new google.maps.Map(document.getElementById('map'), {
-		    zoom: 15,
-		    center: myLatLng
-		  });
-
-		  var marker = new google.maps.Marker({
-		    position: myLatLng,
-		    map: map,
-		    title: 'Hello World!'
-		  });
-		  $(function(){
-				google.maps.event.addListener(map, 'click', function(event) {
-				    alert(event.latLng);  // in event.latLng  you have the coordinates of click
-				});
-			});
-		}
-	var x=document.getElementById("demo");
-	function getLocation()
-	  {
-	  if (navigator.geolocation)
-	    {
-	    navigator.geolocation.getCurrentPosition(showPosition,showError);
-	    }
-	  else{x.innerHTML="Geolocalização não é suportada nesse browser.";}
-	  }
-	 
-	function showPosition(position)
-	  {
-	  lat=position.coords.latitude;
-	  lon=position.coords.longitude;
-	  latlon=new google.maps.LatLng(lat, lon)
-	  mapholder=document.getElementById('map')
-	  mapholder.style.height='550px';
-	  mapholder.style.width='100%';
-	 
-	  var myOptions={
-	  center:latlon,zoom:14,
-	  mapTypeId:google.maps.MapTypeId.ROADMAP,
-	  mapTypeControl:false,
-	  navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-	  };
-	  var map=new google.maps.Map(document.getElementById("map"),myOptions);
-	  var marker=new google.maps.Marker({position:latlon,map:map,title:"Você está Aqui!"});
-	  }
-	 
-	function showError(error)
-	  {
-	  switch(error.code)
-	    {
-	    case error.PERMISSION_DENIED:
-	      x.innerHTML="Usuário rejeitou a solicitação de Geolocalização."
-	      break;
-	    case error.POSITION_UNAVAILABLE:
-	      x.innerHTML="Localização indisponível."
-	      break;
-	    case error.TIMEOUT:
-	      x.innerHTML="O tempo da requisição expirou."
-	      break;
-	    case error.UNKNOWN_ERROR:
-	      x.innerHTML="Algum erro desconhecido aconteceu."
-	      break;
-	    }
-	  }
 	</script>
         #{get 'moreScripts' /}        
     </body>

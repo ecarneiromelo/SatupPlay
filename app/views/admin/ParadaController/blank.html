@@ -27,3 +27,21 @@
         #{/form}
     </div>
 </div>
+#{set 'moreScripts'}
+ <script type="text/javascript">
+
+	function initMap() {
+		var latLng = {lat: -15.792982, lng: -47.886226};
+		var map = new google.maps.Map(document.getElementById('map'), {
+		  zoom: 15,
+		  center: latLng
+		});
+		google.maps.Map.addListener('click', function() {
+		   alert();  // in event.latLng  you have the coordinates of click
+		   console('aqui');
+		   
+		});
+	}
+ 
+ </script>
+#{/set}
