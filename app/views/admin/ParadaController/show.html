@@ -7,6 +7,7 @@
 <div class="step">
     <div id="middle-wizard">
         #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        <div id="map" class="col-md-12" style ="height:350px; margin: 15px 0px;"></div>
              #{crud.form}
             	#{crud.custom 'tbLinha'}
                     #{field 'object.tbLinha'}
@@ -31,11 +32,49 @@
     </div>
 </div>
 #{set 'moreScripts'}
-	<script type="text/javascript">
-		$(function(){
-			google.maps.event.addListener(map, 'click', function(event) {
-			    alert(event.latLng);  // in event.latLng  you have the coordinates of click
-			});
+ <script type="text/javascript">
+ 
+ 	var latLng = { -15.792982, -47.886226};
+	var map;
+    var markers = [];
+    $(function(){
+		map = new google.maps.Map(document.getElementById('map'), {
+		  zoom: 15,
+		  center: latLng
 		});
-	</script>
+      map.addListener('click', function(event) {
+    	deleteMarkers()
+        addMarker(event.latLng);
+    	$('#object_dsPosicao').val(event.latLng.lat() +' , '+ event.latLng.lng())
+      });
+      addMarker('position');
+    });
+    function addMarker(location) {
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map
+      });
+      markers.push(marker);
+    }
+
+    function setMapOnAll(map) {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+      }
+    }
+
+    function clearMarkers() {
+      setMapOnAll(null);
+    }
+
+    function showMarkers() {
+      setMapOnAll(map);
+    }
+
+    function deleteMarkers() {
+      clearMarkers();
+      markers = [];
+    }
+    
+ </script>
 #{/set}

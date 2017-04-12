@@ -26,22 +26,22 @@
 </div>
 #{set 'moreScripts'}
  <script type="text/javascript">
+ 
  	var latLng = {lat: -15.792982, lng: -47.886226};
 	var map;
     var markers = [];
-	function initMap() {
+    $(function(){
 		map = new google.maps.Map(document.getElementById('map'), {
 		  zoom: 15,
 		  center: latLng
 		});
-		
       map.addListener('click', function(event) {
     	deleteMarkers()
         addMarker(event.latLng);
     	$('#object_dsPosicao').val(event.latLng.lat() +' , '+ event.latLng.lng())
       });
       addMarker('position');
-    }
+    });
     function addMarker(location) {
       var marker = new google.maps.Marker({
         position: location,
@@ -68,5 +68,6 @@
       clearMarkers();
       markers = [];
     }
+    
  </script>
 #{/set}
