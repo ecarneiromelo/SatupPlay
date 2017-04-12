@@ -20,21 +20,23 @@
     #{else}
         <p>&{'satup.user.info.home.page'}</p>
     #{/else}
-    <button onclick="getLocation()">Clique aqui</button>
-    <div id="map" class="col-md-12"></div>
+    <div class="col-sm-12">
+    <button class="text-center" onclick="getLocation()">Clique aqui</button>
+    </div>
+    <div id="mapa" class="col-md-12"></div>
    <!-- End col-md-12-->
 </div>
 <!-- End row-->
 #{set 'moreScripts'}
 <script type="text/javascript">
-var x=document.getElementById("map");
+var x=document.getElementById("mapa");
 function getLocation()
   {
   if (navigator.geolocation)
     {
     navigator.geolocation.getCurrentPosition(showPosition,showError);
     }
-  else{x.innerHTML="Geolocalização não é suportada nesse browser.";}
+  else{x.innerHTML="Geolocalizaï¿½ï¿½o nï¿½o ï¿½ suportada nesse browser.";}
   }
  
 function showPosition(position)
@@ -42,7 +44,7 @@ function showPosition(position)
   lat=position.coords.latitude;
   lon=position.coords.longitude;
   latlon=new google.maps.LatLng(lat, lon)
-  mapholder=document.getElementById('map')
+  mapholder=document.getElementById('mapa')
   mapholder.style.height='550px';
   mapholder.style.width='100%';
  
@@ -52,8 +54,8 @@ function showPosition(position)
   mapTypeControl:false,
   navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
   };
-  var map=new google.maps.Map(document.getElementById("map"),myOptions);
-  var marker=new google.maps.Marker({position:latlon,map:map,title:"Você está Aqui!"});
+  var map=new google.maps.Map(document.getElementById("mapa"),myOptions);
+  var marker=new google.maps.Marker({position:latlon,map:map,title:"Vocï¿½ estï¿½ Aqui!"});
   }
  
 function showError(error)
@@ -61,13 +63,13 @@ function showError(error)
   switch(error.code)
     {
     case error.PERMISSION_DENIED:
-      x.innerHTML="Usuário rejeitou a solicitação de Geolocalização."
+      x.innerHTML="Usuï¿½rio rejeitou a solicitaï¿½ï¿½o de Geolocalizaï¿½ï¿½o."
       break;
     case error.POSITION_UNAVAILABLE:
-      x.innerHTML="Localização indisponível."
+      x.innerHTML="Localizaï¿½ï¿½o indisponï¿½vel."
       break;
     case error.TIMEOUT:
-      x.innerHTML="O tempo da requisição expirou."
+      x.innerHTML="O tempo da requisiï¿½ï¿½o expirou."
       break;
     case error.UNKNOWN_ERROR:
       x.innerHTML="Algum erro desconhecido aconteceu."

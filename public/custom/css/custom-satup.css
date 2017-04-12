@@ -1,0 +1,7 @@
+.submit-pricing table tbody tr td:first-child {
+    text-align: center;
+}
+
+.submit-pricing table thead tr th.title {
+    font-size: 18px;
+}

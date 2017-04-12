@@ -7,24 +7,17 @@
 <div class="step">
     <div id="middle-wizard">
         #{form action:@save(object._key()), enctype:'multipart/form-data'}
-        <div id="map" class="col-md-12" style ="height:350px; margin: 15px 0px;"></div>
-             #{crud.form}
-            	#{crud.custom 'tbLinha'}
-                    #{field 'object.tbLinha'}
-	                    <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
-	                        <div class="styled-select">
-	                            #{select field.name, value: field.value, id:field.id, class:'form-control fill-tooltip-grow', alt: play.i18n.Messages.get(field.name), title: play.i18n.Messages.get(field.name)}                    
-	                                <option value="">&{'select.value.linha'}</option>     
-	                                #{list items:models.LinhaBO.findAll(), as:'linha'}                                                                                             
-	                                    <option name="${linha.dsNome}"}" value="${linha.id}" ${linha.equals(field.value) ? 'selected="true"'.raw() : ''}>&{linha.dsNome}</option>
-	                                #{/list}  
-	                            #{/select}                
-	                            #{ifError field.name}
-	                                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
-	                            #{/ifError}
-	                        </div>
-	                    </div>
-                    #{/field}
+        <div id="mapa" class="col-md-12" style ="height:350px; margin: 15px 0px;"></div>
+              #{crud.form}
+            	#{crud.custom 'dsPosicao'}
+                	#{field 'object.dsPosicao'}
+					    <div class="form-group ${field.errorClass ? 'has-error' : ''}">
+					        <input type="text" id="${field.id}" name="${field.name}" class="form-control fill-tooltip-grow" readonly placeholder="&{field.name}" alt="&{field.name}" title="&{field.name}" value="&{field.value}" />
+					        #{ifError field.name}
+					            <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
+					        #{/ifError} 
+					    </div>
+					#{/field}
                 #{/crud.custom}
             #{/crud.form}
             #{system.addCrudButtons /}
@@ -33,22 +26,24 @@
 </div>
 #{set 'moreScripts'}
  <script type="text/javascript">
- 
- 	var latLng = { -15.792982, -47.886226};
-	var map;
+ 	var posicao = '&{object.dsPosicao}'.split(",");
+ 	var latLng = {lat: Number(posicao[0]), lng: Number(posicao[1])};
+ 	var map;
     var markers = [];
     $(function(){
-		map = new google.maps.Map(document.getElementById('map'), {
-		  zoom: 15,
-		  center: latLng
-		});
-      map.addListener('click', function(event) {
-    	deleteMarkers()
-        addMarker(event.latLng);
-    	$('#object_dsPosicao').val(event.latLng.lat() +' , '+ event.latLng.lng())
-      });
-      addMarker('position');
-    });
+   		$(window).load(function(){
+        	map = new google.maps.Map(document.getElementById('mapa'), {
+        	  zoom: 15,
+        	  center: latLng
+        	});
+          map.addListener('click', function(event) {
+        	deleteMarkers()
+            addMarker(event.latLng);
+        	$('#object_dsPosicao').val(event.latLng.lat() +' , '+ event.latLng.lng())
+          });
+          addMarker(latLng);
+   		});
+	});
     function addMarker(location) {
       var marker = new google.maps.Marker({
         position: location,
