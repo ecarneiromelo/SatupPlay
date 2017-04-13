@@ -1,29 +1,16 @@
 #{extends '_layout/body.html' /}
 
-<div class="row">   <div class="col-md-12">
-
-  <!-- Headings & Paragraph Copy -->             
+<div class="row">
+    <div class="col-md-12">        
     <h2>&{'welcome'}</h2>
     <br/>
     <p>
         <span lang="pt-br">${connectedUser}</span>
     </p>
-    #{if connectedUser}
-        <p>&{'client.user.info.home.page'}</p>
-        <div class="import-file-info">
-            &{'import.file.info'}
-            <span style="display: block; width: 100%; text-align: right;">
-                <a href="#" download>&{'get.sampla.upload.file'}</a>
-            </span>
-        </div>
-    #{/if}
-    #{else}
-        <p>&{'satup.user.info.home.page'}</p>
-    #{/else}
+    <p>&{'satup.user.info.home.page'}</p>
 	 <div class="form-group text-left">
 	     <div class="styled-select">
 	         <select>
-	                             
 	             <option value="">&{'select.value.linha'}</option>     
 	             #{list items:models.LinhaBO.findAll(), as:'linha'}                                                                                             
 	                 <option name="${linha.dsNome}"}" value="${linha.id}">&{linha.dsLinha} - &{linha.dsNome}</option>
@@ -31,6 +18,16 @@
 	       </select>              
 	     </div>
 	 </div>
+      <div class="form-group text-left">
+         <div class="styled-select">
+             <select>
+                 <option value="">&{'select.value.parada'}</option>     
+                 #{list items:models.ParadaBO.findAll(), as:'parada'}                                                                                             
+                     <option name="${parada.dsNome}"}" value="${parada.id}">&{parada.dsNumero} - &{parada.dsNome}</option>
+                 #{/list}  
+           </select>              
+         </div>
+     </div>
     <div class="col-sm-12">
     <button class="text-center" onclick="getLocation()">Clique aqui</button>
     </div>

@@ -48,11 +48,12 @@ UserBO=Usuário
 #Other
 search=Procurar
 select.value.linha=Selecione uma Linha
+select.value.parada=Selecione uma Parada
 Save=Salva
 Cancel=Cancelar
+welcome=Bem-Vindo !
 
 #CRUD
-
 crud.title=Administrador
 crud.home=Home
 crud.blank=Novo
