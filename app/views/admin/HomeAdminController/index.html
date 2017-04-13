@@ -20,6 +20,17 @@
     #{else}
         <p>&{'satup.user.info.home.page'}</p>
     #{/else}
+	 <div class="form-group text-left">
+	     <div class="styled-select">
+	         <select>
+	                             
+	             <option value="">&{'select.value.linha'}</option>     
+	             #{list items:models.LinhaBO.findAll(), as:'linha'}                                                                                             
+	                 <option name="${linha.dsNome}"}" value="${linha.id}">&{linha.dsLinha} - &{linha.dsNome}</option>
+	             #{/list}  
+	       </select>              
+	     </div>
+	 </div>
     <div class="col-sm-12">
     <button class="text-center" onclick="getLocation()">Clique aqui</button>
     </div>
