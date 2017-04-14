@@ -12,10 +12,10 @@
                     #{field 'object.tbLinha'}
                     <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
                         <div class="styled-select">
-                            #{select field.name, value: field.value, id:field.id, class:'form-control fill-tooltip-grow', alt: play.i18n.Messages.get(field.name), title: play.i18n.Messages.get(field.name)}                    
+                            #{select field.name, value: field.value, id:field.id, class:'form-control', alt: play.i18n.Messages.get(field.name), title: play.i18n.Messages.get(field.name)}                    
                                 <option value="">&{'select.value.linha'}</option>     
                                 #{list items:models.LinhaBO.findAll(), as:'linha'}                                                                                             
-                                    <option name="${linha.dsNome}"}" value="${linha.id}" ${linha.equals(field.value) ? 'selected="true"'.raw() : ''}>&{linha.dsNome}</option>
+                                    <option name="${linha.dsNome}" value="${linha.id}" ${linha.id == field.id ? 'selected="true"'.raw() : ''}>&{linha.dsNome}</option>
                                 #{/list}  
                             #{/select}                
                             #{ifError field.name}
@@ -30,3 +30,10 @@
         #{/form}
     </div>
 </div>
+#{set 'moreScripts'}
+<script type="text/javascript">
+$(function(){
+	$('#object_dsPlaca').mask('ZZZ-0000');
+})
+</script>
+#{/set}
