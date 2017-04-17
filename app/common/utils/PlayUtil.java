@@ -1,13 +1,5 @@
 package common.utils;
 
-import static common.constants.SystemConstants.APPLICATION_URL;
-import static common.constants.SystemConstants.SMTP_HOST;
-import static common.constants.SystemConstants.SMTP_PASS;
-import static common.constants.SystemConstants.SMTP_PORT;
-import static common.constants.SystemConstants.SMTP_SENDER;
-import static common.constants.SystemConstants.SMTP_USER;
-
-import models.SystemParameterBO;
 import play.Play;
 
 /**

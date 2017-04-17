@@ -9,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import common.constants.DomainConstants.UserStatus;
 import common.encrypt.EncryptProvider;
 import common.exceptions.SystemException;
-import common.utils.BinaryUtil;
 import common.utils.StringUtil;
 import controllers.Secure;
 import controllers.admin.HomeAdminController;
