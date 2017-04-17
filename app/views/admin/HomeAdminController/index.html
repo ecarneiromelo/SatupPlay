@@ -10,20 +10,20 @@
     <p>&{'satup.user.info.home.page'}</p>
 	 <div class="form-group text-left">
 	     <div class="styled-select">
-	         <select>
+	         <select id="object_linha" value="">
 	             <option value="">&{'select.value.linha'}</option>     
 	             #{list items:models.LinhaBO.findAll(), as:'linha'}                                                                                             
-	                 <option name="${linha.dsNome}"}" value="${linha.id}">&{linha.dsLinha} - &{linha.dsNome}</option>
+	                 <option name="${linha.dsNome}" value="${linha.id}">&{linha.dsLinha} - &{linha.dsNome}</option>
 	             #{/list}  
 	       </select>              
 	     </div>
 	 </div>
-      <div class="form-group text-left">
+      <div id="div_parada" class="form-group text-left">
          <div class="styled-select">
-             <select>
+               <select id="object_parada" value="">
                  <option value="">&{'select.value.parada'}</option>     
                  #{list items:models.ParadaBO.findAll(), as:'parada'}                                                                                             
-                     <option name="${parada.dsNome}"}" value="${parada.id}">&{parada.dsNumero} - &{parada.dsNome}</option>
+                     <option name="${parada.dsNome}" value="${parada.id}">&{parada.dsNumero} - &{parada.dsNome}</option>
                  #{/list}  
            </select>              
          </div>
@@ -84,6 +84,25 @@ function showError(error)
       break;
     }
   }
+  $(function(){
+  	 $("#object_linha").on('change',function(){
+  	 	var idLinha = $('#object_linha').val();
+         $.ajax({
+             type: 'POST',
+             dataType: 'json',
+             url: '@{admin.HomeAdminController.getLoadParada}',
+             "data": { "idLinha": idLinha},
+             success: function(data) {
+             	 $.map(data, function (el) {
+             	 alert(el.id);
+                        return {
+                            value: el.id
+                        };
+                    })
+             }
+         });
+      });
+  });
   
 </script>
 #{/set}

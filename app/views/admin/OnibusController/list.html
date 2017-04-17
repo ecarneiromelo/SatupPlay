@@ -7,12 +7,15 @@
 <div class="step">
     <div id="middle-wizard">
        #{crud.search /}
-       #{crud.table fields:['dsPlaca','dsNumero']}
+       #{crud.table fields:['dsPlaca','dsNumero','tbLinha']}
             #{crud.custom 'dsPlaca'}
                    ${object.dsPlaca}
             #{/crud.custom }
             #{crud.custom 'dsNumero'}
                 ${object.dsNumero}
+            #{/crud.custom}
+             #{crud.custom 'tbLinha'}
+                ${object.tbLinha.dsLinha}
             #{/crud.custom}
         #{/crud.table}
     </div>

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 
@@ -14,13 +15,15 @@ import play.db.jpa.Model;
 @Entity
 @Table(name="tb_parada")
 public class ParadaBO extends Model {
-
+	@Required
 	@Column(name="ds_nome")
 	private String dsNome;
 
+	@Required
 	@Column(name="ds_numero")
 	private String dsNumero;
 
+	@Required
 	@Column(name="ds_posicao")
 	private String dsPosicao;
 

@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import common.annotations.JsonExclude;
 import controllers.CRUD;
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 
@@ -17,19 +19,23 @@ import play.db.jpa.Model;
 @Table(name="tb_linha")
 public class LinhaBO extends Model  {
 
-
+	@Required
 	@Column(name="ds_linha")
 	private String dsLinha;
 
+	@Required
 	@Column(name="ds_nome")
 	private String dsNome;
-
+	
+	@Required
 	@Column(name="ds_sentido")
 	private Boolean dsSentido;
-
+	
+	@Required
 	@Column(name="ds_valor")
 	private double dsValor;
-
+	
+	@JsonExclude
 	@OneToMany(mappedBy ="tbLinha")
 	private List<OnibusBO> tbOnibus;
 

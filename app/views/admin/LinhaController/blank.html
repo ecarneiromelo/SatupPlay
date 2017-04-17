@@ -1,0 +1,25 @@
+#{extends 'CRUD/layout.html' /}
+#{set allowInsert:"${!blockInsert}" /}
+#{set allowUpdate:"${!blockUpdate}" /}
+#{set allowDelete:"${!blockDelete}" /}
+
+<h2>&{'crud.blank.title', type.modelName}</h2>
+<div class="step">
+    <div id="middle-wizard">
+        #{form action:@create(),id:'form_linha' , enctype:'multipart/form-data'}
+            #{crud.form /}
+            #{system.addCrudButtons /}
+        #{/form}
+    </div>
+</div>
+#{set 'moreScripts'}
+	<script type="text/javascript">
+	$(function(){
+		$('#object_dsValor').mask('#0,00', {reverse: false});
+		$('#object_dsValor').val('')
+		$('form').submit(function(){
+			$('#object_dsValor').val($('#object_dsValor').val().replace(",","."));
+		});
+	})
+	</script>
+#{/set}

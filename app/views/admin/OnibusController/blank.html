@@ -31,9 +31,13 @@
     </div>
 </div>
 #{set 'moreScripts'}
-<script type="text/javascript">
-$(function(){
-	$('#object_dsPlaca').mask('ZZZ-0000');
-})
-</script>
+	<script type="text/javascript">
+	$(function(){
+		$('#object_dsPlaca').mask('SSS-YYYY', {'translation': {
+	                                        S: {pattern: /[A-Za-z]/},
+	                                        Y: {pattern: /[0-9]/}
+	                                      }
+	                                });
+	})
+	</script>
 #{/set}

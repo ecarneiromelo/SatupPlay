@@ -11,7 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import common.annotations.JsonExclude;
 import models.base.BaseModel;
+import play.data.validation.Required;
 
 /**
  * The persistent class for the tb_onibus database table.
@@ -24,24 +26,37 @@ public class OnibusBO extends BaseModel {
 	@Id
 	@GeneratedValue
 	private Long id;
-
+	
+	@Required
 	@Column(name = "ds_numero")
 	private String dsNumero;
-
+	
+	@Required
 	@Column(name = "ds_placa")
 	private String dsPlaca;
 
 	// bi-directional many-to-one association to TbLocalizacao
+	@JsonExclude
 	@OneToMany(mappedBy = "tbOnibus")
 	private List<LocalizacaoBO> tbLocalizacaos;
 
+	@JsonExclude
 	@ManyToOne
 	@JoinColumn(name="id_linha")
 	private LinhaBO tbLinha;
 	
-	public OnibusBO() {
-	}
-
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Data/Access
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    public static List<OnibusBO> findByLinha(final LinhaBO linha) {
+        return find("tbLinha = ?1", linha ).fetch();
+    }
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // get/set
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
 	public Long getId() {
 		return id;
 	}

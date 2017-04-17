@@ -3,7 +3,9 @@ package models;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import common.annotations.JsonExclude;
 import controllers.CRUD;
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 import java.sql.Timestamp;
@@ -16,14 +18,16 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="tb_localizacao")
 public class LocalizacaoBO extends Model {
-
+	@Required
 	@Column(name="ds_datehora")
 	private Timestamp dsDatehora;
-
+	
+	@Required
 	@Column(name="ds_localizazao")
 	private String dsLocalizazao;
 
 	//bi-directional many-to-one association to TbOnibus
+	@JsonExclude
 	@ManyToOne
 	@JoinColumn(name="id_onibus")
 	private OnibusBO tbOnibus;
