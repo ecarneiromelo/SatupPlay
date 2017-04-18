@@ -9,7 +9,7 @@
         #{form action:@save(object._key()), enctype:'multipart/form-data'}
              #{crud.form}
             	#{crud.custom 'tbLinha'}
-                    #{field 'object.tbLinha'}
+                    #{field 'object.tbLinha.id'}
                     <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
                         <div class="styled-select">
                             #{select field.name, value: field.value, id:field.id, class:'form-control', alt: play.i18n.Messages.get(field.name), title: play.i18n.Messages.get(field.name)}                    

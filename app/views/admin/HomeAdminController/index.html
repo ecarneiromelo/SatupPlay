@@ -29,7 +29,6 @@
          </div>
      </div>
     <div class="col-sm-12">
-    <button class="text-center" onclick="getLocation()">Clique aqui</button>
     </div>
     <div id="mapa" class="col-md-12"></div>
    <!-- End col-md-12-->
@@ -37,18 +36,46 @@
 <!-- End row-->
 #{set 'moreScripts'}
 <script type="text/javascript">
+var map;
+var markers = [];
 var x=document.getElementById("mapa");
+function addMarker(location) {
+    var marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+    markers.push(marker);
+  }
+
+  function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(map);
+    }
+  }
+
+  function clearMarkers() {
+    setMapOnAll(null);
+  }
+
+  function showMarkers() {
+    setMapOnAll(map);
+  }
+
+  function deleteMarkers() {
+    clearMarkers();
+    markers = [];
+  }
 function getLocation()
   {
   if (navigator.geolocation)
     {
-    navigator.geolocation.getCurrentPosition(showPosition,showError);
+    	navigator.geolocation.getCurrentPosition(showPosition,showError);
     }
   else{x.innerHTML="Geolocaliza��o n�o � suportada nesse browser.";}
   }
  
 function showPosition(position)
-  {
+{
   lat=position.coords.latitude;
   lon=position.coords.longitude;
   latlon=new google.maps.LatLng(lat, lon)
@@ -62,9 +89,9 @@ function showPosition(position)
   mapTypeControl:false,
   navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
   };
-  var map=new google.maps.Map(document.getElementById("mapa"),myOptions);
-  var marker=new google.maps.Marker({position:latlon,map:map,title:"Voc� est� Aqui!"});
-  }
+  map=new google.maps.Map(document.getElementById("mapa"),myOptions);
+  marker=new google.maps.Marker({position:latlon,map:map,title:"Voc� est� Aqui!"});
+}
  
 function showError(error)
   {
@@ -92,17 +119,23 @@ function showError(error)
              dataType: 'json',
              url: '@{admin.HomeAdminController.getLoadParada}',
              "data": { "idLinha": idLinha},
+             begin: getLocation(),
              success: function(data) {
              	 $.map(data, function (el) {
-             	 alert(el.id);
-                        return {
-                            value: el.id
-                        };
-                    })
+                    return {
+                        value: el.id,
+                        position: addPosition(el.lastLocation)
+                    };
+                })
              }
          });
       });
   });
+  function addPosition(latLong){
+	  var posicao = latLong.split(",");
+	  var latLng = {lat: Number(posicao[0]), lng: Number(posicao[1])};
+	  addMaker(latLng);
+  }
   
 </script>
 #{/set}

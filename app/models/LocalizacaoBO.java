@@ -37,6 +37,19 @@ public class LocalizacaoBO extends BaseModel {
     @JoinColumn(name = "id_onibus")
     private OnibusBO tbOnibus;
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Data/Access
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public static String findLastDsPositionByOnibus(final OnibusBO onibus) {
+        LocalizacaoBO obj = find("tbOnibus.id = ?1 ORDER BY dsDatehora DESC", onibus.getId()).first();
+        if (obj != null) {
+            return obj.getDsLocalizazao();
+        }
+        return null;
+    }
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // get/set
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public LocalizacaoBO() {
     }
     public Long getId() {

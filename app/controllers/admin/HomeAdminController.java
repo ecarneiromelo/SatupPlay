@@ -13,13 +13,6 @@ import models.base.BaseModel;
  */
 public class HomeAdminController extends BaseCRUDController {
 
-    // private static final GsonBuilder builder = OnibusBO.buildJsonParser();
-    // private static Gson gson = null;
-    // static {
-    // builder.excludeFieldsWithoutExposeAnnotation();
-    // builder.setDateFormat(Play.configuration.getProperty("date.format"));
-    // gson = builder.create();
-    // }
     public static void index() {
         render();
     }
@@ -32,6 +25,9 @@ public class HomeAdminController extends BaseCRUDController {
         LinhaBO linha = LinhaBO.findById(id);
         if (linha != null && linha.getId() != null) {
             lstOnibus = OnibusBO.findByLinha(linha);
+            for (OnibusBO obj : lstOnibus) {
+                obj.loadLastLocation();
+            }
         }
         renderJSON(BaseModel.toJson(lstOnibus));
     }
