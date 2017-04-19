@@ -36,102 +36,99 @@
 <!-- End row-->
 #{set 'moreScripts'}
 <script type="text/javascript">
-var map;
-var markers = [];
-var x=document.getElementById("mapa");
-function addMarker(location) {
-    var marker = new google.maps.Marker({
-      position: location,
-      map: map
-    });
-    markers.push(marker);
-  }
-
-  function setMapOnAll(map) {
-    for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(map);
+    var map;
+    var markers = [];
+    var yourMarker = [] ;
+    var x = document.getElementById("mapa");
+    function addMarker(location , ArraryMarker) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+    	ArraryMarker.push(marker);
     }
-  }
-
-  function clearMarkers() {
-    setMapOnAll(null);
-  }
-
-  function showMarkers() {
-    setMapOnAll(map);
-  }
-
-  function deleteMarkers() {
-    clearMarkers();
-    markers = [];
-  }
- 
-function showPosition(position)
-{
-  lat=position.coords.latitude;
-  lon=position.coords.longitude;
-  latlon=new google.maps.LatLng(lat, lon)
-  mapholder=document.getElementById('mapa')
-  mapholder.style.height='550px';
-  mapholder.style.width='100%';
- 
-  var myOptions =
-  {
-	  center:latlon,
-	  zoom:14,
-	  mapTypeId:google.maps.MapTypeId.ROADMAP,
-	  mapTypeControl:false,
-	  navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-  };
-  map = new google.maps.Map(document.getElementById("mapa"),myOptions);
-  addMarker({position:latlon});
-}
- 
-function showError(error)
-  {
-  switch(error.code)
+	function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(map);
+        }
+	}
+    function clearMarkers() {
+    	setMapOnAll(null);
+    }
+    function showMarkers() {
+    	setMapOnAll(map);
+    }
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+    function showPosition(position)
     {
-    case error.PERMISSION_DENIED:
-      x.innerHTML="Usuário rejeitou a solicitação de Geolocalização."
-      break;
-    case error.POSITION_UNAVAILABLE:
-      x.innerHTML="Localização indispon�vel."
-      break;
-    case error.TIMEOUT:
-      x.innerHTML="O tempo da requisição expirou."
-      break;
-    case error.UNKNOWN_ERROR:
-      x.innerHTML="Algum erro desconhecido aconteceu."
-      break;
+        lat=position.coords.latitude;
+        lon=position.coords.longitude;
+        latlon=new google.maps.LatLng(lat, lon)
+        mapholder=document.getElementById('mapa')
+        mapholder.style.height='550px';
+        mapholder.style.width='100%';
+        var myOptions =
+        {
+            center:latlon,
+            zoom:14,
+            mapTypeId:google.maps.MapTypeId.ROADMAP,
+            mapTypeControl:false,
+            navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+        };
+        map = new google.maps.Map(document.getElementById("mapa"),myOptions);
+        addMarker(latlon, yourMarker);
     }
-  }
-  $(function(){
-	 navigator.geolocation.getCurrentPosition(showPosition,showError);
-  	 $("#object_linha").on('change',function(){
-  		deleteMarkers();
-  		navigator.geolocation.getCurrentPosition(showPosition,showError);
-  	 	var idLinha = $('#object_linha').val();
-         $.ajax({
-             type: 'POST',
-             dataType: 'json',
-             url: '@{admin.HomeAdminController.getLoadParada}',
-             "data": { "idLinha": idLinha},
-             success: function(data) {
-             	 $.map(data, function (el) {
-                    return {
-                        value: el.id,
-                        position: addPosition(el.lastLocation)
-                    };
-                })
-             }
-         });
-      });
-  });
-  function addPosition(latLong){
-	  var posicao = latLong.split(",");
-	  var latLng = {lat: Number(posicao[0]), lng: Number(posicao[1])};
-	  addMarker(latLng);
-  }
-  
+ 
+    function showError(error)
+    {
+        switch(error.code)
+        {
+            case error.PERMISSION_DENIED:
+              x.innerHTML="Usuário rejeitou a solicitação de Geolocalização."
+              break;
+            case error.POSITION_UNAVAILABLE:
+              x.innerHTML="Localização indisponível."
+              break;
+            case error.TIMEOUT:
+              x.innerHTML="O tempo da requisição expirou."
+              break;
+            case error.UNKNOWN_ERROR:
+              x.innerHTML="Algum erro desconhecido aconteceu."
+              break;
+        }
+    }
+    $(function(){
+        $(window).load(function(){
+            navigator.geolocation.getCurrentPosition(showPosition,showError);
+            $("#object_linha").on('change',function(){
+                var idLinha = $('#object_linha').val();
+                 $.ajax({
+                     type: 'POST',
+                     dataType: 'json',
+                     url: '@{admin.HomeAdminController.getLoadParada}',
+                     data: { "idLinha": idLinha},
+                     beforeSende: deleteMarkers(),
+                     success: function(data) {
+                        $.map(data, function (el) {
+                            return {
+                                value: el.id,
+                                position: addPosition(el.lastLocation)
+                            };
+                        })
+                     }
+                });
+        	});
+        });
+    });
+    function addPosition(latLong){
+        if(latLong != null && latLong.length > 0){
+            var posicao = latLong.split(",");
+            var latLng = {lat: Number(posicao[0]), lng: Number(posicao[1])};
+            addMarker(latLng, markers);
+        }
+    }
 </script>
 #{/set}
