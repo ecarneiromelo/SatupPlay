@@ -40,10 +40,13 @@
     var markers = [];
     var yourMarker = [] ;
     var x = document.getElementById("mapa");
-    function addMarker(location , ArraryMarker) {
+    var iconBus = "@{'/public/assets/img/icon-bus-2.png'}";
+    var iconPosition = "@{'/public/assets/img/marker-1.png'}" ;
+    function addMarker(location , ArraryMarker, icon) {
         var marker = new google.maps.Marker({
             position: location,
-            map: map
+            map: map,
+            icon: icon,
         });
     	ArraryMarker.push(marker);
     }
@@ -79,7 +82,7 @@
             navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
         };
         map = new google.maps.Map(document.getElementById("mapa"),myOptions);
-        addMarker(latlon, yourMarker);
+        addMarker(latlon, yourMarker, iconPosition);
     }
  
     function showError(error)
@@ -127,7 +130,7 @@
         if(latLong != null && latLong.length > 0){
             var posicao = latLong.split(",");
             var latLng = {lat: Number(posicao[0]), lng: Number(posicao[1])};
-            addMarker(latLng, markers);
+            addMarker(latLng, markers, iconBus);
         }
     }
 </script>
