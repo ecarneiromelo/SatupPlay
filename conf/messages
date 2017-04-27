@@ -51,7 +51,15 @@ select.value.linha=Selecione uma Linha
 select.value.parada=Selecione uma Parada
 Save=Salva
 Cancel=Cancelar
-welcome=Bem-Vindo !
+welcome=Bem-Vindo %s !
+login.sign=Logar
+secure.signin=Entrar
+secure.forgot.passwd=Esqueceu a senha
+crud.blank.title=Adicionar &{%s}
+your.position=Sua Posição
+secure.username=e-mail
+secure.passwd=senha
+
 
 #CRUD
 crud.title=Administrador
