@@ -2,13 +2,13 @@
 # For example, for French create a messages.fr file
 
 #Menu
-menu.satup=satup
+menu.satup=Satup
 satup=Satup
 menu.position=Posição
-menu.line=Informação Linha
-menu.onibus=Onibus
+menu.line=Informação linha
+menu.onibus=Ônibus
 menu.linha=Linha
-menu.parada=Parada
+menu.parada=Parada de ônibus
 menu.user=Usuário
 menu.logout=Logout
 menu.login=Login
@@ -31,11 +31,11 @@ object.dsSentido=Sentido Contrário
 Add=Adicionar
 ParadaBO=Parada
 Add Parada=Adicionar Parada
-ParadaController=Parada
+ParadaController=Parada de ônibus
 
 #Onibus
-OnibusController=Onibus
-OnibusBO=Onibus
+OnibusController=Ônibus
+OnibusBO=Ônibus
 
 #Linha
 LinhaController=Linha
@@ -47,8 +47,8 @@ UserBO=Usuário
 
 #Other
 search=Procurar
-select.value.linha=Selecione uma Linha
-select.value.parada=Selecione uma Parada
+select.value.linha=Selecione uma linha
+select.value.parada=Selecione uma parada
 Save=Salva
 Cancel=Cancelar
 welcome=Bem-Vindo %s !
@@ -57,8 +57,8 @@ secure.signin=Entrar
 secure.forgot.passwd=Esqueceu a senha
 crud.blank.title=Adicionar &{%s}
 your.position=Sua Posição
-secure.username=e-mail
-secure.passwd=senha
+secure.username=E-mail
+secure.passwd=Senha
 
 
 #CRUD
