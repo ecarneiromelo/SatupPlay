@@ -40,8 +40,6 @@ public class LinhaBO extends BaseModel {
     @OneToMany(mappedBy = "tbLinha")
     private List<OnibusBO> tbOnibus;
 
-    public LinhaBO() {
-    }
     public Long getId() {
         return this.id;
     }
