@@ -5,3 +5,7 @@
 .submit-pricing table thead tr th.title {
     font-size: 18px;
 }
+#logo {
+    width: 100%;
+    height: auto;
+}
