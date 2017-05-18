@@ -24,7 +24,7 @@ public class ProcessUtil {
     // Public static methods.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public static synchronized String runCommand(final String... commandAndArgs) throws SystemException {
-        final List<String> lstCommandAndArgs = new ArrayList<>(commandAndArgs.length);
+        final List<String> lstCommandAndArgs = new ArrayList<String>(commandAndArgs.length);
         for (final String arg : commandAndArgs) {
             lstCommandAndArgs.add(arg);
         }
@@ -44,7 +44,7 @@ public class ProcessUtil {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Private static methods.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private static String getProcessResult(final Process process) throws SystemException {
+    private static String getProcessResult(final Process process) throws SystemException, IOException {
         try {
             if (process.waitFor() == 0) {
                 return getSuccessInputStream(process);
@@ -55,31 +55,50 @@ public class ProcessUtil {
             throw new SystemException(e);
         }
     }
-    private static String getErrorInputStream(final Process process) throws SystemException {
-        try (
-             InputStream errorStream = process.getErrorStream()) {
+    private static String getErrorInputStream(final Process process) throws SystemException, IOException {
+        InputStream errorStream = null;
+        try {
+            errorStream = process.getErrorStream();
             return readInputStream(errorStream);
         } catch (final IOException e) {
             throw new SystemException(e);
+        } finally {
+            if (errorStream != null) {
+                errorStream.close();
+            }
         }
     }
-    private static String getSuccessInputStream(final Process process) throws SystemException {
-        try (
-             InputStream inputStream = process.getInputStream()) {
+    private static String getSuccessInputStream(final Process process) throws SystemException, IOException {
+        InputStream inputStream = null;
+        try {
+            inputStream = process.getInputStream();
             return readInputStream(inputStream);
         } catch (final IOException e) {
             throw new SystemException(e);
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
     }
     private static String readInputStream(final InputStream inputStream) throws IOException {
         final StringBuilder builder = new StringBuilder();
-        try (
-             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-             BufferedReader reader = new BufferedReader(inputStreamReader);) {
+        InputStreamReader inputStreamReader = null;
+        BufferedReader reader = null;
+        try {
+            inputStreamReader = new InputStreamReader(inputStream);
+            reader = new BufferedReader(inputStreamReader);
             while (reader.ready()) {
                 builder.append(reader.readLine());
             }
             return builder.toString();
+        } finally {
+            if (inputStreamReader != null) {
+                inputStreamReader.close();
+            }
+            if (reader != null) {
+                reader.close();
+            }
         }
     }
 }

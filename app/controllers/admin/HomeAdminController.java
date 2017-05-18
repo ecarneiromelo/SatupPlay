@@ -20,7 +20,7 @@ public class HomeAdminController extends BaseAdminController {
     // Ajax static methods.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public static void getLoadParada(final String idLinha) {
-        List<OnibusBO> lstOnibus = new ArrayList<>();
+        List<OnibusBO> lstOnibus = new ArrayList<OnibusBO>();
         Long id = Long.parseLong(idLinha);
         LinhaBO linha = LinhaBO.findById(id);
         if (linha != null && linha.getId() != null) {

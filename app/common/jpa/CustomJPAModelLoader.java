@@ -128,7 +128,7 @@ public class CustomJPAModelLoader extends JPAModelLoader {
     }
     protected List<Model> bindBusinessObjectList(final String[] columnsArray, final List resultList) throws SystemException {
         try {
-            final List<Model> businessObjectList = new ArrayList<>();
+            final List<Model> businessObjectList = new ArrayList<Model>();
             for (Object resultObject : resultList) {
                 if (!resultObject.getClass().isArray()) {
                     resultObject = new Object[] {
@@ -250,7 +250,7 @@ public class CustomJPAModelLoader extends JPAModelLoader {
         }
     }
     private List<Method> loadRelationshipSetMethods(final Class<?> relationshipType) {
-        final List<Method> lstRelationshipSetMethods = new ArrayList<>();
+        final List<Method> lstRelationshipSetMethods = new ArrayList<Method>();
         for (final Method method : relationshipType.getDeclaredMethods()) {
             if (CustomJPAModelLoader.isSetter(method)) {
                 lstRelationshipSetMethods.add(method);

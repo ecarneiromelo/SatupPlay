@@ -37,10 +37,15 @@ public class DBUtil extends DB {
         }
         Long nextval = null;
         if (StringUtil.isNotEmpty(query)) {
-            try (
-                 final ResultSet rs = executeQuery(query)) {
+            ResultSet rs = null;
+            try {
+                rs = executeQuery(query);
                 if (rs.next()) {
                     nextval = rs.getLong("nextval");
+                }
+            } finally {
+                if (rs != null) {
+                    rs.close();
                 }
             }
         }

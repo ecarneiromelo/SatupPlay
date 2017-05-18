@@ -189,12 +189,17 @@ public abstract class BaseCRUDController extends CRUD {
         redirect(request.controller + DOT_LIST);
     }
     public static void renderCaptcha(final String captchaUuid) throws IOException {
-        try (
-             final Images.Captcha captcha = Images.captcha();) {
+        Images.Captcha captcha = null;
+        try {
+            captcha = Images.captcha();
             final String code = captcha.getText(CAPTCHA_COLOR);
             Cache.set(captchaUuid, code, CAPTCHA_EXPIRATION);
             captcha.close();
             renderBinary(captcha);
+        } finally {
+            if (captcha != null) {
+                captcha.close();
+            }
         }
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -263,8 +268,8 @@ public abstract class BaseCRUDController extends CRUD {
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         @Override
         public List<ObjectField> getFields() {
-            final List<CustomObjectField> fields = new ArrayList<>();
-            final List<ObjectField> hiddenFields = new ArrayList<>();
+            final List<CustomObjectField> fields = new ArrayList<CustomObjectField>();
+            final List<ObjectField> hiddenFields = new ArrayList<ObjectField>();
             for (final Model.Property f : this.factory.listProperties()) {
                 final CustomObjectField of = new CustomObjectField(f);
                 if (of.type != null) {

@@ -54,14 +54,24 @@ public class DateUtil extends DateUtils {
         Date currentTimestamp = null;
         final CustomOracle10gDialect dialect = new CustomOracle10gDialect();
         final String query = dialect.getCurrentTimestampSelectString(DBUtil.getConnection());
-        try (
-             final ResultSet rs = DBUtil.executeQuery(query)) {
+        ResultSet rs = null;
+        try {
+            rs = DBUtil.executeQuery(query);
             if (rs.next()) {
                 final long datetime = rs.getTimestamp(1).getTime();
                 currentTimestamp = new Date(datetime);
             }
         } catch (final SQLException e) {
             throw new SystemException(e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
         return currentTimestamp;
     }
@@ -69,14 +79,26 @@ public class DateUtil extends DateUtils {
         Date currentTimestamp = null;
         final CustomPostgreSQLDialect dialect = new CustomPostgreSQLDialect();
         final String query = dialect.getCurrentTimestampSelectString();
-        try (
-             final ResultSet rs = DBUtil.executeQuery(query)) {
+        ResultSet rs = null;
+        try {
+            rs = DBUtil.executeQuery(query);
             if (rs.next()) {
                 final String string = rs.getString(1);
                 currentTimestamp = parseDate(string);
             }
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException e) {
             throw new SystemException(e);
+        } catch (ParseException e) {
+            throw new SystemException(e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
         return currentTimestamp;
     }
@@ -84,14 +106,26 @@ public class DateUtil extends DateUtils {
         Date currentTimestamp = null;
         final CustomPostgreSQLDialect dialect = new CustomPostgreSQLDialect();
         final String query = dialect.getCurrentTimestampUTC0();
-        try (
-             final ResultSet rs = DBUtil.executeQuery(query)) {
+        ResultSet rs = null;
+        try {
+            rs = DBUtil.executeQuery(query);
             if (rs.next()) {
                 final String string = rs.getString(1);
                 currentTimestamp = parseDate(string);
             }
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException e) {
             throw new SystemException(e);
+        } catch (ParseException e) {
+            throw new SystemException(e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
         return currentTimestamp;
     }

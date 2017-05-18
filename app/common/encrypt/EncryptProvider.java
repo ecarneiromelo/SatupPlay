@@ -267,7 +267,19 @@ public final class EncryptProvider {
             System.arraycopy(buffer, 0, output, 36, buffer.length);
             System.arraycopy(hmacResult, 0, output, 36 + buffer.length, 32);
             return Base64.encodeBase64String(output);
-        } catch (final NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | NoSuchPaddingException | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+        } catch (final NoSuchAlgorithmException e) {
+            throw new SystemException(e);
+        } catch (final InvalidKeySpecException e) {
+            throw new SystemException(e);
+        } catch (final InvalidKeyException e) {
+            throw new SystemException(e);
+        } catch (final NoSuchPaddingException e) {
+            throw new SystemException(e);
+        } catch (final InvalidAlgorithmParameterException e) {
+            throw new SystemException(e);
+        } catch (final BadPaddingException e) {
+            throw new SystemException(e);
+        } catch (final IllegalBlockSizeException e) {
             throw new SystemException(e);
         }
     }
@@ -301,7 +313,19 @@ public final class EncryptProvider {
                     // Return our Decrypted String
                     return new String(output, StandardCharsets.UTF_8);
                 }
-            } catch (final NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | NoSuchPaddingException | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+            } catch (final NoSuchAlgorithmException e) {
+                Logger.error(e, e.getLocalizedMessage());
+            } catch (final InvalidKeySpecException e) {
+                Logger.error(e, e.getLocalizedMessage());
+            } catch (final InvalidKeyException e) {
+                Logger.error(e, e.getLocalizedMessage());
+            } catch (final NoSuchPaddingException e) {
+                Logger.error(e, e.getLocalizedMessage());
+            } catch (final InvalidAlgorithmParameterException e) {
+                Logger.error(e, e.getLocalizedMessage());
+            } catch (final BadPaddingException e) {
+                Logger.error(e, e.getLocalizedMessage());
+            } catch (final IllegalBlockSizeException e) {
                 Logger.error(e, e.getLocalizedMessage());
             }
         }

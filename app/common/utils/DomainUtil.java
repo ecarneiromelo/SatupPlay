@@ -25,7 +25,7 @@ public class DomainUtil {
     // Public static methods.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public static final Map<Short, String> getStatus() {
-        final Map<Short, String> map = new LinkedHashMap<>();
+        final Map<Short, String> map = new LinkedHashMap<Short, String>();
         map.put(WAITING_RESPONDENT, STATUS_WAITING_RESPONDENT);
         map.put(IN_PROGRESS, STATUS_IN_PROGRESS);
         map.put(CLOSED, STATUS_CLOSED);
