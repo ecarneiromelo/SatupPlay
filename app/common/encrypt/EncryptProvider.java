@@ -1,34 +1,26 @@
 package common.encrypt;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.Mac;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
 import common.exceptions.SystemException;
 import common.utils.BinaryUtil;
-import play.Logger;
 
 /**
  * @author jgomes
@@ -237,100 +229,6 @@ public final class EncryptProvider {
             throw new SystemException(e);
         }
     }
-    public static String encryptAESWithHmac256(final String value, final String salt) throws SystemException {
-        try {
-            final SecureRandom secureRandom = SecureRandom.getInstance(AlgorithmName.SHA1PRNG.getValue());
-            // Generate 128 bit Salt for Encryption Key
-            final byte[] aesSalt = new byte[16];
-            secureRandom.nextBytes(aesSalt);
-            // Generate 128 bit Encryption Key (AES keys)
-            final byte[] aesKey = deriveKey(value, aesSalt, ITERATION_COUNT, 128);
-            // Perform Encryption
-            final SecretKeySpec secretKeySpec = new SecretKeySpec(aesKey, AlgorithmName.AES.getValue());
-            final Cipher cipher = Cipher.getInstance(AlgorithmName.AES_CTR_NO_PADDING.getValue());
-            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));
-            final byte[] buffer = cipher.doFinal(salt.getBytes(StandardCharsets.UTF_8));
-            // Generate 160 bit Salt for HMAC Key
-            final byte[] hmacSalt = new byte[20];
-            secureRandom.nextBytes(hmacSalt);
-            // Generate 160 bit HMAC Key
-            final byte[] hmacKey = deriveKey(value, hmacSalt, ITERATION_COUNT, 160);
-            // Perform HMAC using SHA-256
-            final SecretKeySpec hmacSecretKeySpec = new SecretKeySpec(hmacKey, AlgorithmName.HMAC_SHA256.getValue());
-            final Mac mac = Mac.getInstance(AlgorithmName.HMAC_SHA256.getValue());
-            mac.init(hmacSecretKeySpec);
-            final byte[] hmacResult = mac.doFinal(buffer);
-            // Construct Output as "ESALT + HSALT + CIPHERTEXT + HMAC"
-            final byte[] output = new byte[36 + buffer.length + 32];
-            System.arraycopy(aesSalt, 0, output, 0, 16);
-            System.arraycopy(hmacSalt, 0, output, 16, 20);
-            System.arraycopy(buffer, 0, output, 36, buffer.length);
-            System.arraycopy(hmacResult, 0, output, 36 + buffer.length, 32);
-            return Base64.encodeBase64String(output);
-        } catch (final NoSuchAlgorithmException e) {
-            throw new SystemException(e);
-        } catch (final InvalidKeySpecException e) {
-            throw new SystemException(e);
-        } catch (final InvalidKeyException e) {
-            throw new SystemException(e);
-        } catch (final NoSuchPaddingException e) {
-            throw new SystemException(e);
-        } catch (final InvalidAlgorithmParameterException e) {
-            throw new SystemException(e);
-        } catch (final BadPaddingException e) {
-            throw new SystemException(e);
-        } catch (final IllegalBlockSizeException e) {
-            throw new SystemException(e);
-        }
-    }
-    public static String decryptAESWithHmac256(final String encryptedString, final String value) {
-        // Recover our Byte Array by Base64 Decoding
-        final byte[] decodedBuffer = Base64.decodeBase64(encryptedString);
-        // Check Minimum Length (ESALT (16) + HSALT (20) + HMAC (32))
-        if (decodedBuffer.length > 68) {
-            // Recover Elements from String
-            final byte[] aesSalt = Arrays.copyOfRange(decodedBuffer, 0, 16);
-            final byte[] hmacSalt = Arrays.copyOfRange(decodedBuffer, 16, 36);
-            final byte[] buffer = Arrays.copyOfRange(decodedBuffer, 36, decodedBuffer.length - 32);
-            final byte[] hmacResult = Arrays.copyOfRange(decodedBuffer, decodedBuffer.length - 32, decodedBuffer.length);
-            try {
-                // Regenerate HMAC key using Recovered Salt (hsalt)
-                final byte[] hmacKey = deriveKey(value, hmacSalt, ITERATION_COUNT, 160);
-                // Perform HMAC using SHA-256
-                final SecretKeySpec hmacSecretKeySpec = new SecretKeySpec(hmacKey, AlgorithmName.HMAC_SHA256.getValue());
-                final Mac mac = Mac.getInstance(AlgorithmName.HMAC_SHA256.getValue());
-                mac.init(hmacSecretKeySpec);
-                final byte[] hmacRecovered = mac.doFinal(buffer);
-                // Compare computed HMAC vs recovered HMAC
-                if (MessageDigest.isEqual(hmacResult, hmacRecovered)) {
-                    // Regenerate Encryption Key using Recovered Salt (esalt)
-                    final byte[] aesKey = deriveKey(value, aesSalt, ITERATION_COUNT, 128);
-                    // Perform Decryption
-                    final SecretKeySpec aesSecretKeySpec = new SecretKeySpec(aesKey, AlgorithmName.AES.getValue());
-                    final Cipher cipher = Cipher.getInstance(AlgorithmName.AES_CTR_NO_PADDING.getValue());
-                    cipher.init(Cipher.DECRYPT_MODE, aesSecretKeySpec, new IvParameterSpec(new byte[16]));
-                    final byte[] output = cipher.doFinal(buffer);
-                    // Return our Decrypted String
-                    return new String(output, StandardCharsets.UTF_8);
-                }
-            } catch (final NoSuchAlgorithmException e) {
-                Logger.error(e, e.getLocalizedMessage());
-            } catch (final InvalidKeySpecException e) {
-                Logger.error(e, e.getLocalizedMessage());
-            } catch (final InvalidKeyException e) {
-                Logger.error(e, e.getLocalizedMessage());
-            } catch (final NoSuchPaddingException e) {
-                Logger.error(e, e.getLocalizedMessage());
-            } catch (final InvalidAlgorithmParameterException e) {
-                Logger.error(e, e.getLocalizedMessage());
-            } catch (final BadPaddingException e) {
-                Logger.error(e, e.getLocalizedMessage());
-            } catch (final IllegalBlockSizeException e) {
-                Logger.error(e, e.getLocalizedMessage());
-            }
-        }
-        return null;
-    }
     private static Cipher configEncryptCipher(final AlgorithmName algorithm, final KeySpec keySpec, final SecretKeyFactory secretkeyFactory)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException {
         Cipher cipher;
@@ -344,11 +242,6 @@ public final class EncryptProvider {
         cipher = Cipher.getInstance(algorithm.getValue());
         cipher.init(Cipher.DECRYPT_MODE, secretkeyFactory.generateSecret(keySpec));
         return cipher;
-    }
-    private static byte[] deriveKey(final String value, final byte[] salt, final int iterations, final int keySize) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        final PBEKeySpec pbeKeySpec = new PBEKeySpec(value.toCharArray(), salt, iterations, keySize);
-        final SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(AlgorithmName.PBKDF2_WITH_HMAC_SHA1.getValue());
-        return secretKeyFactory.generateSecret(pbeKeySpec).getEncoded();
     }
 
     /**
