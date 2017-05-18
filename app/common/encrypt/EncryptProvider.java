@@ -27,8 +27,6 @@ import common.utils.BinaryUtil;
  */
 public final class EncryptProvider {
 
-    private static final int ITERATION_COUNT = 10000;
-
     public static String encryptMD5(final String data) throws NoSuchAlgorithmException {
         final MessageDigest md = MessageDigest.getInstance(AlgorithmName.MD5.getValue());
         final BigInteger hash = new BigInteger(1, md.digest(data.getBytes()));

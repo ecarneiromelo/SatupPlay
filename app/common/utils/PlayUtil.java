@@ -7,11 +7,6 @@ import play.Play;
  */
 public class PlayUtil {
 
-    private static final String MAIL_SMTP_HOST = "mail.smtp.host";
-    private static final String MAIL_SMTP_PORT = "mail.smtp.port";
-    private static final String MAIL_SMTP_USER = "mail.smtp.user";
-    private static final String MAIL_SMTP_PASS = "mail.smtp.pass";
-    private static final String MAIL_SMTP_FROM = "mail.smtp.from";
     private static final String SECURE_REMEMBERME_DURATION = "secure.rememberme.duration";
     private static final String APPLICATION_BASE_URL = "application.baseUrl";
     private static final String APPLICATION_ID = "application.secret";
@@ -81,20 +76,28 @@ public class PlayUtil {
     public static String getApplicationId() {
         return getProperty(PlayUtil.APPLICATION_ID);
     }
-//    public static void refreshSmtpConfiguration() {
-//        SystemParameterBO param = (SystemParameterBO) SystemParameterBO.findById(SMTP_HOST);
-//        setConfigurationIfNotNull(MAIL_SMTP_HOST, param != null ? param.getValue() : null);
-//        param = (SystemParameterBO) SystemParameterBO.findById(SMTP_PORT);
-//        setConfigurationIfNotNull(MAIL_SMTP_PORT, param != null ? param.getValue() : null);
-//        param = (SystemParameterBO) SystemParameterBO.findById(SMTP_USER);
-//        setConfigurationIfNotNull(MAIL_SMTP_USER, param != null ? param.getValue() : null);
-//        param = (SystemParameterBO) SystemParameterBO.findById(SMTP_PASS);
-//        setConfigurationIfNotNull(MAIL_SMTP_PASS, param != null ? param.getValue() : null);
-//        param = (SystemParameterBO) SystemParameterBO.findById(SMTP_SENDER);
-//        setConfigurationIfNotNull(MAIL_SMTP_FROM, param != null ? param.getValue() : null);
-//    }
-//    public static void refreshApplicationBaseUrl() {
-//        final SystemParameterBO param = (SystemParameterBO) SystemParameterBO.findById(APPLICATION_URL);
-//        setConfigurationIfNotNull(APPLICATION_BASE_URL, param != null ? param.getValue() : null);
-//    }
+    // public static void refreshSmtpConfiguration() {
+    // SystemParameterBO param = (SystemParameterBO)
+    // SystemParameterBO.findById(SMTP_HOST);
+    // setConfigurationIfNotNull(MAIL_SMTP_HOST, param != null ?
+    // param.getValue() : null);
+    // param = (SystemParameterBO) SystemParameterBO.findById(SMTP_PORT);
+    // setConfigurationIfNotNull(MAIL_SMTP_PORT, param != null ?
+    // param.getValue() : null);
+    // param = (SystemParameterBO) SystemParameterBO.findById(SMTP_USER);
+    // setConfigurationIfNotNull(MAIL_SMTP_USER, param != null ?
+    // param.getValue() : null);
+    // param = (SystemParameterBO) SystemParameterBO.findById(SMTP_PASS);
+    // setConfigurationIfNotNull(MAIL_SMTP_PASS, param != null ?
+    // param.getValue() : null);
+    // param = (SystemParameterBO) SystemParameterBO.findById(SMTP_SENDER);
+    // setConfigurationIfNotNull(MAIL_SMTP_FROM, param != null ?
+    // param.getValue() : null);
+    // }
+    // public static void refreshApplicationBaseUrl() {
+    // final SystemParameterBO param = (SystemParameterBO)
+    // SystemParameterBO.findById(APPLICATION_URL);
+    // setConfigurationIfNotNull(APPLICATION_BASE_URL, param != null ?
+    // param.getValue() : null);
+    // }
 }
