@@ -4,4 +4,4 @@
 
 INSERT INTO tb_user(
             id, email, name, pass, login_attempts, status)
-    VALUES (0, ‘master’ ,’master’,md5(’master’) , 0, 0);
+    VALUES (0, 'master' ,'master',md5('master') , 0, 0);
