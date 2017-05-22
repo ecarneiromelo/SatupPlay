@@ -9,6 +9,7 @@ GET     /login                                                                  
 GET     /logout                                                                                         security.SecureController.logout
 POST    /login                                                                                          security.SecureController.authenticate
 GET     /access/denied                                                                                  security.SecurityController.onCheckFailed
+GET     /receive/{idPosition}                                                                           ReceivePositionController.savePosition
 
 # Admin Routes
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

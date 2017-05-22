@@ -1,5 +1,6 @@
 package models;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import common.annotations.JsonExclude;
+import common.utils.DateUtil;
+import common.utils.DateUtil.DatePattern;
 import models.base.BaseModel;
 import play.data.validation.Required;
 
@@ -43,6 +46,9 @@ public class OnibusBO extends BaseModel {
     private LinhaBO tbLinha;
     @Transient
     private String lastLocation;
+    @Transient
+    private String lastTimeLocation;
+
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constructors.
@@ -54,7 +60,11 @@ public class OnibusBO extends BaseModel {
     // Transients.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void loadLastLocation() {
-        this.lastLocation = LocalizacaoBO.findLastDsPositionByOnibus(this);
+    	LocalizacaoBO location = LocalizacaoBO.findLastDsPositionByOnibus(this);
+    	if(location != null){
+    		this.lastLocation = location.getDsLocalizazao();
+    		this.lastTimeLocation = DateUtil.parseString(location.getDsDatehora(),DatePattern.SLASH_DD_MM_YYYY_HH_MM);
+    	}
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data/Access

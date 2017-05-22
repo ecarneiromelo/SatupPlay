@@ -40,10 +40,10 @@ public class LocalizacaoBO extends BaseModel {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data/Access
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public static String findLastDsPositionByOnibus(final OnibusBO onibus) {
+    public static LocalizacaoBO findLastDsPositionByOnibus(final OnibusBO onibus) {
         LocalizacaoBO obj = find("tbOnibus.id = ?1 ORDER BY dsDatehora DESC", onibus.getId()).first();
         if (obj != null) {
-            return obj.getDsLocalizazao();
+            return obj;
         }
         return null;
     }

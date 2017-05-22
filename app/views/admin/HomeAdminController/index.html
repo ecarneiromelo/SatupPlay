@@ -40,14 +40,38 @@
     var x = document.getElementById("mapa");
     var iconBus = "@{'/public/assets/img/icon-bus-2.png'}";
     var iconPosition = "@{'/public/assets/img/marker-1.png'}" ;
-    function addMarker(location , ArraryMarker, icon) {
+    var start;
+ 	var end;
+ 	var directionsDisplay;
+	var directionsService = new google.maps.DirectionsService();
+    function addMarker(location, ArraryMarker, icon, title) {
         var marker = new google.maps.Marker({
             position: location,
             map: map,
             icon: icon,
+            title: title,
         });
     	ArraryMarker.push(marker);
+    	if(ArraryMarker == markers){
+	    	marker.addListener('click', function() {
+	    		alert(marker.getPosition());
+	    		start = marker.getPosition();
+	    		calcRoute()
+	        });
+        }
     }
+    function calcRoute() {
+	  var request = {
+	    origin: start,
+	    destination: end,
+	    travelMode: 'DRIVING'
+	  };
+	  directionsService.route(request, function(result, status) {
+	    if (status == 'OK') {
+	      directionsDisplay.setDirections(result);
+	    }
+	  });
+  }
 	function setMapOnAll(map) {
         for (var i = 0; i < markers.length; i++) {
 			markers[i].setMap(map);
@@ -67,6 +91,7 @@
     {
         lat=position.coords.latitude;
         lon=position.coords.longitude;
+        directionsDisplay = new google.maps.DirectionsRenderer();
         latlon=new google.maps.LatLng(lat, lon)
         mapholder=document.getElementById('mapa')
         mapholder.style.height='550px';
@@ -116,7 +141,7 @@
                         $.map(data, function (el) {
                             return {
                                 value: el.id,
-                                position: addPosition(el.lastLocation)
+                                position: addPosition(el.lastLocation, el.lastTimeLocation)                                
                             };
                         })
                      }
@@ -124,11 +149,11 @@
         	});
         });
     });
-    function addPosition(latLong){
+    function addPosition(latLong, dateTime){
         if(latLong != null && latLong.length > 0){
             var posicao = latLong.split(",");
             var latLng = {lat: Number(posicao[0]), lng: Number(posicao[1])};
-            addMarker(latLng, markers, iconBus);
+            addMarker(latLng, markers, iconBus, dateTime);
         }
     }
 </script>
