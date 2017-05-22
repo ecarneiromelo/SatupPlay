@@ -27,8 +27,8 @@ openssl genrsa 1024 > host.key
 openssl req -new -x509 -nodes -sha1 -days 365 -key host.key > host.cert
 
 # For Linux/Windows import:
-#keytool -import -trustcacerts -alias scif09host -keystore $cacerts -file conf/host.cert
+keytool -import -trustcacerts -alias satup -keystore $cacerts -file conf/host.cert
 
 # For MacOs import:
-sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain host.host
+#sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain host.host
 ##sudo certtool i "host.host" k=/System/Library/Keychains/X509Anchors
