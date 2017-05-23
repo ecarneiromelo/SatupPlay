@@ -1,8 +1,9 @@
-package controllers.admin;
+package controllers.guest;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import controllers.base.BaseGuestController;
 import models.LinhaBO;
 import models.OnibusBO;
 import models.ParadaBO;
@@ -12,8 +13,7 @@ import models.base.BaseModel;
 /**
  * @author jgomes | 8 de jul de 2016 - 21:51:23
  */
-public class HomeAdminController extends BaseAdminController {
-
+public class HomeController extends BaseGuestController {
 
     public static void index() {
         render();

@@ -19,9 +19,8 @@
                 </div>
                 <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
                     <ul class="nav navbar-nav">
-                        <li><a href="@{admin.HomeAdminController.index}">&{'menu.position'}</a></li>
-                        <li><a href="@{admin.HomeAdminController.index}">&{'menu.line'}</a></li>
                           #{if connectedUser}
+	                        <li><a href="@{admin.HomeAdminController.index}">&{'menu.line'}</a></li>
                             <li><a href="@{admin.Onibuscontroller.list}">&{'menu.onibus'}</a></li>
 	                        <li><a href="@{admin.LinhaController.list}">&{'menu.linha'}</a></li>
 	                        <li><a href="@{admin.ParadaController.list}">&{'menu.parada'}</a></li>
@@ -29,6 +28,7 @@
 	                        <li><a href="@{security.SecureController.logout}">&{'menu.logout'}</a></li>
                           #{/if}
                           #{else}
+                            <li><a href="@{guest.HomeController.index}">&{'menu.line'}</a></li>
                             <li><a href="@{admin.HomeAdminController.index}">&{'menu.login'}</a></li>
                           #{/else}
                     </ul>

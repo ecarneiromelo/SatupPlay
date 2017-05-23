@@ -2,14 +2,19 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import common.annotations.JsonExclude;
+import controllers.CRUD.Hidden;
 import models.base.BaseModel;
 import play.data.validation.Required;
 
@@ -39,8 +44,18 @@ public class LinhaBO extends BaseModel {
     @JsonExclude
     @OneToMany(mappedBy = "tbLinha")
     private List<OnibusBO> tbOnibus;
+    @Hidden
+    @ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "rl_linha_parada", joinColumns = { @JoinColumn(name = "id_linha") }, inverseJoinColumns = { @JoinColumn(name = "id_parada") })
+    private List<ParadaBO> tbParada;
 
-    public Long getId() {
+    public List<ParadaBO> getTbParada() {
+		return tbParada;
+	}
+	public void setTbParada(List<ParadaBO> tbParada) {
+		this.tbParada = tbParada;
+	}
+	public Long getId() {
         return this.id;
     }
     public void setId(Long id) {
@@ -76,4 +91,8 @@ public class LinhaBO extends BaseModel {
     public void setTbOnibus(List<OnibusBO> tbOnibus) {
         this.tbOnibus = tbOnibus;
     }
+	@Override
+	public String toString() {
+		return   dsLinha + "-" + dsNome;
+	}
 }

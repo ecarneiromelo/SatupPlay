@@ -8,23 +8,6 @@
     <div id="middle-wizard">
         #{form action:@create(),id:'form_linha' , enctype:'multipart/form-data'}
            #{crud.form}
-            	#{crud.custom 'tbOnibus'}
-                    #{field 'object.tbOnibus'}
-                    <div class="form-group ${field.errorClass ? 'has-error' : ''} text-left">
-                        <div class="styled-select">
-                           <select  name="object.tbOnibus" class="multi-select" multiple="multiple">                    
-                                <option value="">&{'select.value.linha'}</option>     
-                                #{list items:models.ParadaBO.findAll(), as:'parada'}                                                                                             
-                                    <option name="${parada.dsNome}" value="${parada.id}" ${parada.id == field.id ? 'selected="true"'.raw() : ''}>&{parada.dsNome}</option>
-                                #{/list}  
-                            </select>                
-                            #{ifError field.name}
-                                <span id="helpBlock2" class="help-block">${field.error.raw()}</span>
-                            #{/ifError}
-                        </div>
-                    </div>
-                    #{/field}
-                #{/crud.custom}
             #{/crud.form}
             #{system.addCrudButtons /}
         #{/form}

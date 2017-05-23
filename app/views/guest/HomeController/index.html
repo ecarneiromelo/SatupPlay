@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-12">        
-    <h2>&{'welcome', connectedUser }</h2>
+    <h2>&{'welcome', '' }</h2>
     <br/>
     <img src="@{'/public/assets/img/icon-bus-2.png'}"/>&{'OnibusBO'}
     <img src="@{'/public/assets/img/marker-1.png'}"/>&{'your.position'}
@@ -19,6 +19,7 @@
     <div class="col-sm-12">
     </div>
     <div id="mapa" class="col-md-12"></div>
+    <div id="right-panel" class="col-md-12"></div>
    <!-- End col-md-12-->
 </div>
 <!-- End row-->
@@ -137,7 +138,7 @@
                  $.ajax({
                      type: 'POST',
                      dataType: 'json',
-                     url: '@{admin.HomeAdminController.getLoadParada}',
+                     url: '@{guest.HomeController.getLoadParada}',
                      data: { "idLinha": idLinha},
                      beforeSende: deleteMarkers(),
                      success: function(data) {
@@ -152,7 +153,7 @@
                                   $.ajax({
                      type: 'POST',
                      dataType: 'json',
-                     url: '@{admin.HomeAdminController.getLoadMarker}',
+                     url: '@{guest.HomeController.getLoadMarker}',
                      data: { "idLinha": idLinha},
                      beforeSende: deleteMarkers(),
                      success: function(data) {

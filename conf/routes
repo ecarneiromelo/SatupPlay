@@ -2,6 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+
+
 # Secure Routes
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 GET     /                                                                                               Secure.login
@@ -9,7 +11,10 @@ GET     /login                                                                  
 GET     /logout                                                                                         security.SecureController.logout
 POST    /login                                                                                          security.SecureController.authenticate
 GET     /access/denied                                                                                  security.SecurityController.onCheckFailed
-GET     /receive/{idPosition}                                                                           ReceivePositionController.savePosition
+
+#Guest Routes
+GET     /receive/{idPosition}                                                                           guest.ReceivePositionController.savePosition
+GET     /index				                                                                            guest.HomeController.index
 
 # Admin Routes
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
